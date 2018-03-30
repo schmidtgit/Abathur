@@ -1,6 +1,5 @@
 ﻿using Abathur.Core;
-using Abathur.Core.Production;
-using NydusNetwork.API.Protocol;
+using Abathur.Model;
 
 namespace Abathur.Modules.Services
 {

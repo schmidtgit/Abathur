@@ -1,12 +1,10 @@
-﻿using Abathur.Core;
-using Abathur.Model;
+﻿using Abathur.Model;
 using Abathur.Modules.Services;
 using NydusNetwork;
-using NydusNetwork.API.Protocol;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Abathur.Modules
+namespace Abathur.Modules.External
 {
     public class ExternalModule : IModule {
         private const int TIMEOUT = 100000000; //ms

@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using Abathur.Core;
-using Abathur.Core.Combat;
 using Abathur.Model;
 using Abathur.Repositories;
-using NydusNetwork.API.Protocol;
 
 namespace Abathur.Modules.Services
 {
