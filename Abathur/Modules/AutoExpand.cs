@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Abathur.Constants;
 using Abathur.Core;
 using Abathur.Core.Combat;
-using Abathur.Modules.Services;
+using Abathur.Extensions;
 using Abathur.Repositories;
 
-namespace Abathur.Modules
-{
-    class AutoExpand : IModule
-    {
+namespace Abathur.Modules {
+    class AutoExpand : IModule {
         private IIntelManager _intel;
         private ISquadRepository _squadRepository;
         private Squad _mainBuildings;
@@ -21,21 +17,17 @@ namespace Abathur.Modules
         private uint workerType;
         private Squad _refineries;
 
-        public AutoExpand(IIntelManager intel, ISquadRepository squadRepository, IProductionManager productionManager)
-        {
+        public AutoExpand(IIntelManager intel, ISquadRepository squadRepository, IProductionManager productionManager) {
             _intel = intel;
             _squadRepository = squadRepository;
             _productionManager = productionManager;
         }
-        public void Initialize()
-        {
-            
-        }
+        public void Initialize() {}
 
         public void OnStart()
         {
             _mainBuildingTypes = new List<uint>();
-            switch(GameConstants.ParticipantRace) {
+            switch(_intel.ParticipantRace) {
                 case NydusNetwork.API.Protocol.Race.NoRace:
                     break;
                 case NydusNetwork.API.Protocol.Race.Terran:
@@ -69,15 +61,12 @@ namespace Abathur.Modules
                     _mainBuildings.AddUnit(u);
                     _baseAmount++;
                 }
-                if (GameConstants.RaceRefinery == u.UnitType)
-                {
+                else if (GameConstants.IsRefinery(u.UnitType))
                     _refineries.AddUnit(u);
-                }
             });
         }
 
-        public void OnStep()
-        {
+        public void OnStep() {
             var workerAmount = _intel.WorkersSelf().Count();
 
             if (!_intel.ProductionQueue.Any() &&  workerAmount < _baseAmount*16)
@@ -86,27 +75,21 @@ namespace Abathur.Modules
                     _productionManager.QueueUnit(workerType);
                 }
             }
-            else if (!_intel.ProductionQueue.Any()) //TODO Seemingly 4 SCV's get stuck in the production queue but is never made(using AutoExpand and AutoSupply)
+            else if (!_intel.ProductionQueue.Any())
             {
                 var curCol = _mainBuildings.Units.First();
                 //TODO Use AStar distance rather than a Euclidian distance
-                var nextCol = _intel.Colonies.OrderBy(c => MathServices.EuclidianDistance(curCol.Point, c.Point)).FirstOrDefault(col => col.Structures.Count == 0);
+                var nextCol = _intel.Colonies.OrderBy(c => MathExtensions.EuclidianDistance(curCol.Point, c.Point)).FirstOrDefault(col => col.Structures.Count == 0);
                 if (nextCol!=null)
                 {
-                    _productionManager.QueueUnit(_mainBuildingTypes.First(),nextCol.Point,3);//TODO the placement algorithm does not take mineral spacing from HQ's into account and giving a spacing of 3 will make other objects block the HQ's
+                    _productionManager.QueueUnit(_mainBuildingTypes.First(),nextCol.Point);
                 }
             }
 
         }
 
-        public void OnGameEnded()
-        {
-            
-        }
+        public void OnGameEnded() {}
 
-        public void OnRestart()
-        {
-            
-        }
+        public void OnRestart() {}
     }
 }

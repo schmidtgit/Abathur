@@ -1,47 +1,8 @@
 ﻿using System.Collections.Generic;
-using NydusNetwork.API.Protocol;
 
 namespace Abathur.Constants {
     public static class GameConstants {
-        /// <summary>
-        /// Get the current GameLoop
-        /// </summary>
-        public static uint GameLoop { get; set; }
-        /// <summary>
-        /// Might be NoRace or Random until first frame have been read by IntelManager.
-        /// </summary>
-        public static Race ParticipantRace { get => _participantRace; set => UpdateRace(value); }
-        /// <summary>
-        /// Enemy race (might be unset or random is enemy is still unseen)
-        /// </summary>
-        public static Race EnemyRace { get; set; }
-        private static Race _participantRace;
-        private static void UpdateRace(Race race) {
-            _participantRace = race;
-            switch(race) {
-                case (Race.Terran):
-                    RaceHarvestGatherAbility = 295;
-                    RaceRefinery = BlizzardConstants.Unit.Refinery;
-                    RaceHeadquarter = BlizzardConstants.Unit.CommandCenter;
-                    RaceSupply = BlizzardConstants.Unit.SupplyDepot;
-                    break;
-                case (Race.Protoss):
-                    RaceHarvestGatherAbility = 298;
-                    RaceRefinery = BlizzardConstants.Unit.Assimilator;
-                    RaceHeadquarter = BlizzardConstants.Unit.Nexus;
-                    RaceSupply = BlizzardConstants.Unit.Pylon;
-                    break;
-                case (Race.Zerg):
-                    RaceHarvestGatherAbility = 1183;
-                    RaceRefinery = BlizzardConstants.Unit.Extractor;
-                    RaceHeadquarter = BlizzardConstants.Unit.Hatchery;
-                    RaceSupply = BlizzardConstants.Unit.Overlord;
-                    break;
-            }
-        }
-
-        private static ISet<uint> _morphedUnits = new HashSet<uint>
-        {
+        private static ISet<uint> MorphedUnits = new HashSet<uint> {
             BlizzardConstants.Unit.Baneling,
             BlizzardConstants.Unit.Drone,
             BlizzardConstants.Unit.Zergling,
@@ -65,11 +26,10 @@ namespace Abathur.Constants {
             BlizzardConstants.Unit.OverlordTransport,
             BlizzardConstants.Unit.OrbitalCommand,
             BlizzardConstants.Unit.PlanetaryFortress,
-            BlizzardConstants.Unit.Archon
+            BlizzardConstants.Unit.Archon,
+            BlizzardConstants.Unit.WarpGate
         };
-
-        private static ISet<uint> CocoonIds = new HashSet<uint>
-        {
+        private static ISet<uint> Cocoons = new HashSet<uint> {
             BlizzardConstants.Unit.BanelingCocoon,
             BlizzardConstants.Unit.BroodLordCocoon,
             BlizzardConstants.Unit.DevourerCocoon,
@@ -82,27 +42,11 @@ namespace Abathur.Constants {
         };
 
         /// <summary>
-        /// HarvestGather ability ID for Terran (295), Protoss (298) or Zerg (1183)
+        /// Refinery (20), Extractor (88) and Assimilator (61)
         /// </summary>
-        public static int RaceHarvestGatherAbility { get; private set; } = 3666;
-
-        /// <summary>
-        /// Unit ID for the building that allows extration of vespene from geysers.
-        /// Refinery (20), Assimilator (61) or Extractor (88).
-        /// </summary>
-        public static uint RaceRefinery { get; private set; }
-
-        /// <summary>
-        /// Unit ID for the building that allows production of workers.
-        /// Command Center (18), Nexus (59) or Hatchery (86)
-        /// </summary>
-        public static uint RaceHeadquarter { get; private set; }
-
-        /// <summary>
-        /// Unit ID for supply!
-        /// Supply Depot (19), Pylon (60) or Overlord (106)
-        /// </summary>
-        public static uint RaceSupply { get; private set; }
+        /// <param name="id">UnitType ID as defined by Blizzard</param>
+        /// <returns>Returns true if the ID is of the type refinery.</returns>
+        public static bool IsRefinery(uint id) => id == BlizzardConstants.Unit.Refinery || id == BlizzardConstants.Unit.Extractor || id == BlizzardConstants.Unit.Assimilator;
 
         /// <summary>
         /// Larva (151)
@@ -204,7 +148,7 @@ namespace Abathur.Constants {
         /// </summary>
         /// <param name="id">UnitType ID as defined by Blizzard</param>
         /// <returns>Returns true if the ID is of the type requires morphing from another unit</returns>
-        public static bool IsMorphed(uint id) => _morphedUnits.Contains(id);
+        public static bool IsMorphed(uint id) => MorphedUnits.Contains(id);
 
         /// <summary>
         /// Check if the unit ID requires an attached techlab in order to be build.
@@ -238,6 +182,6 @@ namespace Abathur.Constants {
         /// </summary>
         /// <param name="id">UnitType ID as defined by Blizzard</param>
         /// <returns>Returns true if the ID is a cocoon type</returns>
-        public static bool IsCocoon(uint id) => CocoonIds.Contains(id);
+        public static bool IsCocoon(uint id) => Cocoons.Contains(id);
     }
 }

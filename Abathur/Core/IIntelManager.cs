@@ -18,6 +18,14 @@ namespace Abathur.Core {
         /// </summary>
         uint GameLoop { get; }
         /// <summary>
+        /// Get the participant race, might be random before gamestart.
+        /// </summary>
+        Race ParticipantRace { get; }
+        /// <summary>
+        /// Get the enemy race, might be random or unset until an enemy unit have been seen.
+        /// </summary>
+        Race EnemyRace { get; }
+        /// <summary>
         /// Get the current score (updated each step)
         /// </summary>
         Score CurrentScore { get; }

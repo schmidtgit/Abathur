@@ -1,15 +1,12 @@
 ﻿using Abathur.Core;
 using Abathur.Model;
 
-namespace Abathur.Modules.Services
-{
+namespace Abathur.Modules.External.Services {
     public class ProductionManagerService : IProductionManagerService {
         private IProductionManager _manager;
 
-        public ProductionManagerService(IProductionManager manager)
-        {
-            _manager = manager;
-        }
+        public ProductionManagerService(IProductionManager manager) { _manager = manager; }
+
         public void Execute (ProductionRequest request) {
             switch(request.CallCase) {
                 case ProductionRequest.CallOneofCase.None:

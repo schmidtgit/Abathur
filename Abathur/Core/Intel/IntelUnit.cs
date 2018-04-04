@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Abathur.Constants;
 using Abathur.Extensions;
 using Abathur.Model;
@@ -9,12 +10,14 @@ namespace Abathur.Core.Intel
     internal class IntelUnit : IUnit {
         public uint lastSeen;
         private Unit data;
-        public uint FramesSinceSeen => GameConstants.GameLoop - lastSeen;
+        private Func<uint> gameloop;
+        public uint FramesSinceSeen => gameloop.Invoke() - lastSeen;
         public Unit DataSource {
             get { return data; }
-            set { lastSeen = GameConstants.GameLoop;
+            set { lastSeen = gameloop.Invoke();
                 data = value; } }
-        public IntelUnit(Unit unit) { data = unit; }
+
+        public IntelUnit(Unit unit,Func<uint> gameloopfunc) { data = unit; gameloop = gameloopfunc; }
 
         public ulong AddOnTag => data.AddOnTag;
 

@@ -17,10 +17,26 @@ namespace Abathur.Modules
                 return;
             if(intelManager.Common.FoodUsed < intelManager.Common.FoodCap)
                 return;
-            if(intelManager.ProductionQueue.Where(u => u.UnitId == GameConstants.RaceSupply).FirstOrDefault() != null)
+            if(intelManager.ProductionQueue.Where(u => u.UnitId == Supply()).FirstOrDefault() != null)
                 return;
-            productionManager.QueueUnitImportant(GameConstants.RaceSupply);
+            productionManager.QueueUnitImportant(Supply());
         }
+
+        private uint Supply() {
+            switch(intelManager.ParticipantRace) {
+                case Race.Terran:
+                    return BlizzardConstants.Unit.SupplyDepot;
+                case Race.Zerg:
+                    return BlizzardConstants.Unit.Overlord;
+                case Race.Protoss:
+                    return BlizzardConstants.Unit.Pylon;
+                case Race.NoRace:
+                case Race.Random:
+                default:
+                    throw new System.ArgumentException("Race is unknown!");
+            }
+        }
+
         void IModule.Initialize() { }
         void IModule.OnStart() { } 
         void IModule.OnGameEnded() { }

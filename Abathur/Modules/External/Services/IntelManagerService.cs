@@ -1,25 +1,82 @@
-﻿using Abathur.Constants;
-using Abathur.Core;
+﻿using Abathur.Core;
 using Abathur.Core.Intel;
-using Abathur.Model;
 using NydusNetwork.API.Protocol;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Abathur.Core.Combat;
+using Abathur.Model;
 using Abathur.Repositories;
 
-namespace Abathur.Modules.Services
-{
+namespace Abathur.Modules.External.Services {
     public class IntelManagerService : IIntelManagerService {
         private IIntelManager _intel;
         private ISquadRepository _squadRepo;
+        private ICollection<IntelEvent> _events;
 
-        public IntelManagerService(IIntelManager intel, ISquadRepository squadRepository)
-        {
+        public IntelManagerService(IIntelManager intel, ISquadRepository squadRepository) {
             _intel = intel;
             _squadRepo = squadRepository;
+            _events = new List<IntelEvent>();
         }
+
+        public void RegisterForEvents() {
+            _intel.Handler.RegisterHandler(Case.MineralDepleted,HandleMineralDepleted);
+            _intel.Handler.RegisterHandler(Case.UnitDestroyed,HandleUnitDestroyed);
+            _intel.Handler.RegisterHandler(Case.AddedHiddenEnemy,HandleAddedHiddenEnemy);
+            _intel.Handler.RegisterHandler(Case.StructureAddedEnemy,HandleStructureAddedEnemy);
+            _intel.Handler.RegisterHandler(Case.StructureAddedSelf,HandleStructureAddedSelf);
+            _intel.Handler.RegisterHandler(Case.StructureDestroyed,HandleStructureDestroyed);
+            _intel.Handler.RegisterHandler(Case.UnitAddedEnemy,HandleUnitAddedEnemy);
+            _intel.Handler.RegisterHandler(Case.UnitAddedSelf,HandleUnitAddedSelf);
+            _intel.Handler.RegisterHandler(Case.WorkerAddedEnemy,HandleWorkerAddedEnemy);
+            _intel.Handler.RegisterHandler(Case.WorkerAddedSelf,HandleWorkerAddedSelf);
+            _intel.Handler.RegisterHandler(Case.WorkerDestroyed,HandleWorkerDestroyed);
+        }
+
+        private void HandleWorkerDestroyed(IUnit unit) {
+            _events.Add(new IntelEvent{CaseType = CaseType.WorkerDestroyed,UnitTag = unit.Tag});
+        }
+
+        private void HandleWorkerAddedSelf(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.WorkerAddedSelf,UnitTag = unit.Tag });
+        }
+
+        private void HandleWorkerAddedEnemy(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.WorkerAddedEnemy,UnitTag = unit.Tag });
+        }
+
+        private void HandleUnitAddedSelf(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.UnitAddedSelf,UnitTag = unit.Tag });
+        }
+
+        private void HandleUnitAddedEnemy(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.UnitAddedEnemy,UnitTag = unit.Tag });
+        }
+
+        private void HandleStructureDestroyed(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.StructureDestroyed,UnitTag = unit.Tag });
+        }
+
+        private void HandleStructureAddedSelf(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.StructureAddedSelf,UnitTag = unit.Tag });
+        }
+
+        private void HandleStructureAddedEnemy(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.StructureAddedEnemy,UnitTag = unit.Tag });
+        }
+
+        private void HandleAddedHiddenEnemy(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.AddedHiddenEnemy,UnitTag = unit.Tag });
+        }
+
+        private void HandleUnitDestroyed(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.UnitDestroyed,UnitTag = unit.Tag });
+        }
+
+        private void HandleMineralDepleted(IUnit unit) {
+            _events.Add(new IntelEvent { CaseType = CaseType.MineralDepleted,UnitTag = unit.Tag });
+        }
+
         public IntelResponse BundleIntel(IntelRequest request) {
             AbathurMap map = null;
             if(request.Map)
@@ -76,6 +133,9 @@ namespace Abathur.Modules.Services
             if (request.GameLoop)
                 gameloop = _intel.GameLoop;
 
+            var events = _events.ToList();
+            _events.Clear();
+
             return new IntelResponse {
                 Map = map,
                 Score = score,
@@ -84,22 +144,27 @@ namespace Abathur.Modules.Services
                 BuildingsSelf = { Convert(alliedBuilding) },
                 WorkersSelf = { Convert(alliedWorkers) },
                 UnitsSelf = { Convert(alliedUnits) },
-                StructuresEnemy = { Convert(structuresEnemy)},
-                WorkersEnemy = { Convert(workersEnemy)},
-                UnitsEnemy = { Convert(unitsEnemy)},
+                StructuresEnemy = { Convert(structuresEnemy) },
+                WorkersEnemy = { Convert(workersEnemy) },
+                UnitsEnemy = { Convert(unitsEnemy) },
                 PrimaryColony = Convert(primaryColony),
-                Colonies = { Convert(colonies.ToList())},
+                Colonies = { Convert(colonies.ToList()) },
                 MineralFields = { Convert(mineralFields) },
                 VespeneGeysers = { Convert(vespeneGeysers) },
                 Destructibles = { Convert(destructibles) },
-                ProductionQueue = {productionQueue},
-                Squads = { squads.Select(Convert)},
-                GameLoop = gameloop
+                ProductionQueue = { productionQueue },
+                Squads = { squads.Select(Convert) },
+                GameLoop = gameloop,
+                Events = {events}
             };
         }
 
         private static IEnumerable<Unit> Convert(ICollection<IUnit> units) {
             return units.Select(u => ((IntelUnit)u).DataSource);
+        }
+
+        private static Unit Convert(IUnit unit) {
+            return ((IntelUnit)unit).DataSource;
         }
 
         private static IEnumerable<ColonyData> Convert(ICollection<IColony> colonies) {
@@ -130,5 +195,6 @@ namespace Abathur.Modules.Services
                 Units = { Convert(squad.Units.ToList())}
             };
         }
+
     }
 }

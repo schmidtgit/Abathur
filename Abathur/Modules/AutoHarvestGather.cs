@@ -69,13 +69,28 @@ namespace Abathur.Modules
                 new Action {
                     ActionRaw = new ActionRaw {
                         UnitCommand = new ActionRawUnitCommand {
-                            AbilityId = GameConstants.RaceHarvestGatherAbility,
+                            AbilityId = HarvestGatherAbility(),
                             TargetUnitTag = target,
                             UnitTags = { workers.Select(w => w.Tag).ToList()
                         }
                         }
                     }
                 });
+
+        private int HarvestGatherAbility() {
+            switch(intelManager.ParticipantRace) {
+                case Race.Terran:
+                    return 295;
+                case Race.Zerg:
+                    return 1183;
+                case Race.Protoss:
+                    return 298;
+                case Race.NoRace:
+                case Race.Random:
+                default:
+                    return 3666;
+            }
+        }
 
         void IModule.Initialize() { }
         void IModule.OnStart() {}

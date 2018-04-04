@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Abathur.Constants;
 using Abathur.Core;
+using Abathur.Extensions;
 using Abathur.Model;
-using Abathur.Modules.Services;
 using NydusNetwork.API.Protocol;
 using NydusNetwork.Logging;
 
@@ -54,7 +52,7 @@ namespace Abathur.Modules
             {
                 foreach (var unit in _intel.UnitsEnemyVisible.Where(u => u.UnitType!= BlizzardConstants.Unit.Overlord || u.UnitType != BlizzardConstants.Unit.Overseer || u.UnitType != BlizzardConstants.Unit.OverlordTransport))
                 {
-                    if (MathServices.EuclidianDistance(unit,_scout)<10)
+                    if (MathExtensions.EuclidianDistance(unit,_scout)<10)
                     {
                         _combat.Move(_scout.Tag,GetFleePoint(_scout.Point, unit.Point));
                         _scouting = false;
@@ -63,7 +61,7 @@ namespace Abathur.Modules
             }
             if (!_scouting)
             {
-                var sortedColonies = _intel.Colonies.OrderBy(c => MathServices.EuclidianDistance(c.Point, _eStart));
+                var sortedColonies = _intel.Colonies.OrderBy(c => MathExtensions.EuclidianDistance(c.Point, _eStart));
                 foreach (var colony in sortedColonies)
                 {
                     _combat.Move(_scout.Tag,colony.Point, true);

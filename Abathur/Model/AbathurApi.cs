@@ -8,6 +8,7 @@
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
+using scg = global::System.Collections.Generic;
 namespace Abathur.Model {
 
     /// <summary>Holder for reflection information generated from abathur.proto</summary>
@@ -25,162 +26,178 @@ namespace Abathur.Model {
                 string.Concat(
                   "Cg1hYmF0aHVyLnByb3RvEhlOeWR1c05ldHdvcmsuQVBJLlByb3RvY29sGgxj",
                   "b21tb24ucHJvdG8aDHNjMmFwaS5wcm90bxoKZGF0YS5wcm90bxoJcmF3LnBy",
-                  "b3RvGgtzY29yZS5wcm90byL4AQoOQWJhdGh1clJlcXVlc3QSNgoFaW50ZWwY",
-                  "ASABKAsyJy5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLkludGVsUmVxdWVz",
-                  "dBJACgpwcm9kdWN0aW9uGAMgAygLMiwuTnlkdXNOZXR3b3JrLkFQSS5Qcm90",
-                  "b2NvbC5Qcm9kdWN0aW9uUmVxdWVzdBI4CgZjb21iYXQYBCADKAsyKC5OeWR1",
-                  "c05ldHdvcmsuQVBJLlByb3RvY29sLkNvbWJhdFJlcXVlc3QSMgoDcmF3GAUg",
-                  "ASgLMiUuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5SYXdSZXF1ZXN0IsMB",
+                  "b3RvGgtzY29yZS5wcm90bxoNc3BhdGlhbC5wcm90bxoIdWkucHJvdG8ijAIK",
+                  "DkFiYXRodXJSZXF1ZXN0EjYKBWludGVsGAEgASgLMicuTnlkdXNOZXR3b3Jr",
+                  "LkFQSS5Qcm90b2NvbC5JbnRlbFJlcXVlc3QSQAoKcHJvZHVjdGlvbhgDIAMo",
+                  "CzIsLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUHJvZHVjdGlvblJlcXVl",
+                  "c3QSOAoGY29tYmF0GAQgAygLMiguTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2Nv",
+                  "bC5Db21iYXRSZXF1ZXN0EjIKA3JhdxgFIAEoCzIlLk55ZHVzTmV0d29yay5B",
+                  "UEkuUHJvdG9jb2wuUmF3UmVxdWVzdBISCgpvbmx5X2FzeW5jGAYgASgIIsMB",
                   "Cg9BYmF0aHVyUmVzcG9uc2USNwoFaW50ZWwYASABKAsyKC5OeWR1c05ldHdv",
                   "cmsuQVBJLlByb3RvY29sLkludGVsUmVzcG9uc2USPQoMbm90aWZpY2F0aW9u",
                   "GAIgASgLMicuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Ob3RpZmljYXRp",
                   "b24SOAoLcmF3UmVzcG9uc2UYAyABKAsyIy5OeWR1c05ldHdvcmsuQVBJLlBy",
-                  "b3RvY29sLlJlc3BvbnNlIocDCgxJbnRlbFJlcXVlc3QSCwoDbWFwGAEgASgI",
+                  "b3RvY29sLlJlc3BvbnNlIskDCgxJbnRlbFJlcXVlc3QSCwoDbWFwGAEgASgI",
                   "Eg0KBXNjb3JlGAIgASgIEg4KBmNvbW1vbhgDIAEoCBIVCg11cGdyYWRlc19z",
                   "ZWxmGAQgASgIEhYKDmJ1aWxkaW5nc19zZWxmGAUgASgIEhIKCnVuaXRzX3Nl",
                   "bGYYBiABKAgSFAoMd29ya2Vyc19zZWxmGAcgASgIEhUKDWRlc3RydWN0aWJs",
                   "ZXMYCCABKAgSGAoQc3RydWN0dXJlc19lbmVteRgJIAEoCBITCgt1bml0c19l",
                   "bmVteRgKIAEoCBIVCg13b3JrZXJzX2VuZW15GAsgASgIEhYKDnByaW1hcnlf",
-                  "Y29sb255GA8gASgIEhAKCGNvbG9uaWVzGBAgASgIEhYKDm1pbmVyYWxfZmll",
-                  "bGRzGBEgASgIEhYKDlZlc3BlbmVHZXlzZXJzGBIgASgIEhgKEHByb2R1Y3Rp",
-                  "b25fcXVldWUYEyABKAgSDgoGc3F1YWRzGBQgASgIEhEKCWdhbWVfbG9vcBgV",
-                  "IAEoCCLpBwoNSW50ZWxSZXNwb25zZRIyCgNtYXAYASABKAsyJS5OeWR1c05l",
-                  "dHdvcmsuQVBJLlByb3RvY29sLkFiYXRodXJNYXASLwoFc2NvcmUYAiABKAsy",
-                  "IC5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlNjb3JlEjcKBmNvbW1vbhgD",
-                  "IAEoCzInLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUGxheWVyQ29tbW9u",
-                  "Ej0KDXVwZ3JhZGVzX3NlbGYYBCADKAsyJi5OeWR1c05ldHdvcmsuQVBJLlBy",
-                  "b3RvY29sLlVwZ3JhZGVEYXRhEjcKDmJ1aWxkaW5nc19zZWxmGAUgAygLMh8u",
-                  "TnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0EjMKCnVuaXRzX3NlbGYY",
-                  "BiADKAsyHy5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlVuaXQSNQoMd29y",
-                  "a2Vyc19zZWxmGAcgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5V",
-                  "bml0EjYKDWRlc3RydWN0aWJsZXMYCCADKAsyHy5OeWR1c05ldHdvcmsuQVBJ",
-                  "LlByb3RvY29sLlVuaXQSOQoQc3RydWN0dXJlc19lbmVteRgJIAMoCzIfLk55",
-                  "ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5pdBI0Cgt1bml0c19lbmVteRgK",
-                  "IAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5pdBI2Cg13b3Jr",
-                  "ZXJzX2VuZW15GAsgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5V",
-                  "bml0Ej0KDnByaW1hcnlfY29sb255GA8gASgLMiUuTnlkdXNOZXR3b3JrLkFQ",
-                  "SS5Qcm90b2NvbC5Db2xvbnlEYXRhEjcKCGNvbG9uaWVzGBAgAygLMiUuTnlk",
-                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Db2xvbnlEYXRhEjcKDm1pbmVyYWxf",
-                  "ZmllbGRzGBEgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0",
-                  "EjgKD3Zlc3BlbmVfZ2V5c2VycxgSIAMoCzIfLk55ZHVzTmV0d29yay5BUEku",
-                  "UHJvdG9jb2wuVW5pdBJBChBwcm9kdWN0aW9uX3F1ZXVlGBMgAygLMicuTnlk",
-                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0VHlwZURhdGESNAoGc3F1YWRz",
-                  "GBQgAygLMiQuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5TcXVhZERhdGES",
-                  "EQoJZ2FtZV9sb29wGBUgASgNItwBChFQcm9kdWN0aW9uUmVxdWVzdBJHChFj",
-                  "bGVhcl9idWlsZF9vcmRlchgBIAEoCzIqLk55ZHVzTmV0d29yay5BUEkuUHJv",
-                  "dG9jb2wuQ2xlYXJCdWlsZE9yZGVySAASOgoKcXVldWVfdW5pdBgCIAEoCzIk",
-                  "Lk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUXVldWVVbml0SAASOgoKcXVl",
-                  "dWVfdGVjaBgDIAEoCzIkLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUXVl",
-                  "dWVUZWNoSABCBgoEY2FsbCIRCg9DbGVhckJ1aWxkT3JkZXIicQoJUXVldWVV",
-                  "bml0Eg8KB3VuaXRfaWQYASABKA0SLwoDcG9zGAIgASgLMiIuTnlkdXNOZXR3",
-                  "b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg8KB3NwYWNpbmcYAyABKAUSEQoJ",
-                  "c2tpcHBhYmxlGAQgASgIIjIKCVF1ZXVlVGVjaBISCgp1cGdyYWRlX2lkGAEg",
-                  "ASgNEhEKCXNraXBwYWJsZRgCIAEoCCLaCwoNQ29tYmF0UmVxdWVzdBI4Cglt",
-                  "b3ZlX3VuaXQYASABKAsyIy5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLk1v",
-                  "dmVVbml0SAASOgoKbW92ZV9zcXVhZBgCIAEoCzIkLk55ZHVzTmV0d29yay5B",
-                  "UEkuUHJvdG9jb2wuTW92ZVNxdWFkSAASRQoQYXR0YWNrX21vdmVfdW5pdBgD",
-                  "IAEoCzIpLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuQXR0YWNrTW92ZVVu",
-                  "aXRIABJHChFhdHRhY2tfbW92ZV9zcXVhZBgEIAEoCzIqLk55ZHVzTmV0d29y",
-                  "ay5BUEkuUHJvdG9jb2wuQXR0YWNrTW92ZVNxdWFkSAASPAoLYXR0YWNrX3Vu",
-                  "aXQYBSABKAsyJS5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLkF0dGFja1Vu",
-                  "aXRIABI+CgxhdHRhY2tfc3F1YWQYBiABKAsyJi5OeWR1c05ldHdvcmsuQVBJ",
-                  "LlByb3RvY29sLkF0dGFja1NxdWFkSAASVgoZdXNlX3RhcmdldGVkX2FiaWxp",
-                  "dHlfdW5pdBgHIAEoCzIxLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVXNl",
-                  "VGFyZ2V0ZWRBYmlsaXR5VW5pdEgAElgKGnVzZV90YXJnZXRlZF9hYmlsaXR5",
-                  "X3NxdWFkGAggASgLMjIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vc2VU",
-                  "YXJnZXRlZEFiaWxpdHlTcXVhZEgAEmEKH3VzZV9wb2ludF9jZW50ZXJlZF9h",
-                  "YmlsaXR5X3VuaXQYCSABKAsyNi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29s",
-                  "LlVzZVBvaW50Q2VudGVyZWRBYmlsaXR5VW5pdEgAEmMKIHVzZV9wb2ludF9j",
-                  "ZW50ZXJlZF9hYmlsaXR5X3NxdWFkGAogASgLMjcuTnlkdXNOZXR3b3JrLkFQ",
-                  "SS5Qcm90b2NvbC5Vc2VQb2ludENlbnRlcmVkQWJpbGl0eVNxdWFkSAASWgob",
-                  "dXNlX3RhcmdldGxlc3NfYWJpbGl0eV91bml0GAsgASgLMjMuTnlkdXNOZXR3",
-                  "b3JrLkFQSS5Qcm90b2NvbC5Vc2VUYXJnZXRsZXNzQWJpbGl0eVVuaXRIABJc",
-                  "Chx1c2VfdGFyZ2V0bGVzc19hYmlsaXR5X3NxdWFkGAwgASgLMjQuTnlkdXNO",
-                  "ZXR3b3JrLkFQSS5Qcm90b2NvbC5Vc2VUYXJnZXRsZXNzQWJpbGl0eVNxdWFk",
-                  "SAASQwoPc21hcnRfbW92ZV91bml0GA0gASgLMiguTnlkdXNOZXR3b3JrLkFQ",
-                  "SS5Qcm90b2NvbC5TbWFydE1vdmVVbml0SAASRQoQc21hcnRfbW92ZV9zcXVh",
-                  "ZBgOIAEoCzIpLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuU21hcnRNb3Zl",
-                  "U3F1YWRIABJQChZzbWFydF9hdHRhY2tfbW92ZV91bml0GA8gASgLMi4uTnlk",
-                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5TbWFydEF0dGFja01vdmVVbml0SAAS",
-                  "UgoXc21hcnRfYXR0YWNrX21vdmVfc3F1YWQYECABKAsyLy5OeWR1c05ldHdv",
-                  "cmsuQVBJLlByb3RvY29sLlNtYXJ0QXR0YWNrTW92ZVNxdWFkSAASRwoRc21h",
-                  "cnRfYXR0YWNrX3VuaXQYESABKAsyKi5OeWR1c05ldHdvcmsuQVBJLlByb3Rv",
-                  "Y29sLlNtYXJ0QXR0YWNrVW5pdEgAEkkKEnNtYXJ0X2F0dGFja19zcXVhZBgS",
-                  "IAEoCzIrLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuU21hcnRBdHRhY2tT",
-                  "cXVhZEgAEkAKDXNxdWFkX3JlcXVlc3QYEyABKAsyJy5OeWR1c05ldHdvcmsu",
-                  "QVBJLlByb3RvY29sLlNxdWFkUmVxdWVzdEgAQgkKB2NvbW1hbmQiXgoITW92",
-                  "ZVVuaXQSEAoIdW5pdF90YWcYASABKAQSMQoFcG9pbnQYAiABKAsyIi5OeWR1",
-                  "c05ldHdvcmsuQVBJLlByb3RvY29sLlBvaW50MkQSDQoFcXVldWUYAyABKAgi",
-                  "XAoJTW92ZVNxdWFkEg0KBXNxdWFkGAEgASgEEjEKBXBvaW50GAIgASgLMiIu",
-                  "TnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg0KBXF1ZXVlGAMg",
-                  "ASgIImQKDkF0dGFja01vdmVVbml0EhAKCHVuaXRfdGFnGAEgASgEEjEKBXBv",
+                  "Y29sb255GAwgASgIEhAKCGNvbG9uaWVzGA0gASgIEhYKDm1pbmVyYWxfZmll",
+                  "bGRzGA4gASgIEhYKDlZlc3BlbmVHZXlzZXJzGA8gASgIEhgKEHByb2R1Y3Rp",
+                  "b25fcXVldWUYECABKAgSDgoGc3F1YWRzGBEgASgIEhEKCWdhbWVfbG9vcBgS",
+                  "IAEoCBIaChJmZWF0dXJlX2xheWVyX2RhdGEYEyABKAgSEwoLcmVuZGVyX2Rh",
+                  "dGEYFCABKAgSDwoHdWlfZGF0YRgVIAEoCCLuCQoNSW50ZWxSZXNwb25zZRIy",
+                  "CgNtYXAYASABKAsyJS5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLkFiYXRo",
+                  "dXJNYXASLwoFc2NvcmUYAiABKAsyIC5OeWR1c05ldHdvcmsuQVBJLlByb3Rv",
+                  "Y29sLlNjb3JlEjcKBmNvbW1vbhgDIAEoCzInLk55ZHVzTmV0d29yay5BUEku",
+                  "UHJvdG9jb2wuUGxheWVyQ29tbW9uEj0KDXVwZ3JhZGVzX3NlbGYYBCADKAsy",
+                  "Ji5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlVwZ3JhZGVEYXRhEjcKDmJ1",
+                  "aWxkaW5nc19zZWxmGAUgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2Nv",
+                  "bC5Vbml0EjMKCnVuaXRzX3NlbGYYBiADKAsyHy5OeWR1c05ldHdvcmsuQVBJ",
+                  "LlByb3RvY29sLlVuaXQSNQoMd29ya2Vyc19zZWxmGAcgAygLMh8uTnlkdXNO",
+                  "ZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0EjYKDWRlc3RydWN0aWJsZXMYCCAD",
+                  "KAsyHy5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlVuaXQSOQoQc3RydWN0",
+                  "dXJlc19lbmVteRgJIAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wu",
+                  "VW5pdBI0Cgt1bml0c19lbmVteRgKIAMoCzIfLk55ZHVzTmV0d29yay5BUEku",
+                  "UHJvdG9jb2wuVW5pdBI2Cg13b3JrZXJzX2VuZW15GAsgAygLMh8uTnlkdXNO",
+                  "ZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0Ej0KDnByaW1hcnlfY29sb255GAwg",
+                  "ASgLMiUuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Db2xvbnlEYXRhEjcK",
+                  "CGNvbG9uaWVzGA0gAygLMiUuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5D",
+                  "b2xvbnlEYXRhEjcKDm1pbmVyYWxfZmllbGRzGA4gAygLMh8uTnlkdXNOZXR3",
+                  "b3JrLkFQSS5Qcm90b2NvbC5Vbml0EjgKD3Zlc3BlbmVfZ2V5c2VycxgPIAMo",
+                  "CzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5pdBJBChBwcm9kdWN0",
+                  "aW9uX3F1ZXVlGBAgAygLMicuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5V",
+                  "bml0VHlwZURhdGESNAoGc3F1YWRzGBEgAygLMiQuTnlkdXNOZXR3b3JrLkFQ",
+                  "SS5Qcm90b2NvbC5TcXVhZERhdGESEQoJZ2FtZV9sb29wGBIgASgNEk4KEmZl",
+                  "YXR1cmVfbGF5ZXJfZGF0YRgTIAEoCzIyLk55ZHVzTmV0d29yay5BUEkuUHJv",
+                  "dG9jb2wuT2JzZXJ2YXRpb25GZWF0dXJlTGF5ZXISQQoLcmVuZGVyX2RhdGEY",
+                  "FCABKAsyLC5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLk9ic2VydmF0aW9u",
+                  "UmVuZGVyEjkKB3VpX2RhdGEYFSABKAsyKC5OeWR1c05ldHdvcmsuQVBJLlBy",
+                  "b3RvY29sLk9ic2VydmF0aW9uVUkSNQoGZXZlbnRzGDIgAygLMiUuTnlkdXNO",
+                  "ZXR3b3JrLkFQSS5Qcm90b2NvbC5JbnRlbEV2ZW50ItwBChFQcm9kdWN0aW9u",
+                  "UmVxdWVzdBJHChFjbGVhcl9idWlsZF9vcmRlchgBIAEoCzIqLk55ZHVzTmV0",
+                  "d29yay5BUEkuUHJvdG9jb2wuQ2xlYXJCdWlsZE9yZGVySAASOgoKcXVldWVf",
+                  "dW5pdBgCIAEoCzIkLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUXVldWVV",
+                  "bml0SAASOgoKcXVldWVfdGVjaBgDIAEoCzIkLk55ZHVzTmV0d29yay5BUEku",
+                  "UHJvdG9jb2wuUXVldWVUZWNoSABCBgoEY2FsbCIRCg9DbGVhckJ1aWxkT3Jk",
+                  "ZXIicQoJUXVldWVVbml0Eg8KB3VuaXRfaWQYASABKA0SLwoDcG9zGAIgASgL",
+                  "MiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg8KB3NwYWNp",
+                  "bmcYAyABKAUSEQoJc2tpcHBhYmxlGAQgASgIIjIKCVF1ZXVlVGVjaBISCgp1",
+                  "cGdyYWRlX2lkGAEgASgNEhEKCXNraXBwYWJsZRgCIAEoCCLaCwoNQ29tYmF0",
+                  "UmVxdWVzdBI4Cgltb3ZlX3VuaXQYASABKAsyIy5OeWR1c05ldHdvcmsuQVBJ",
+                  "LlByb3RvY29sLk1vdmVVbml0SAASOgoKbW92ZV9zcXVhZBgCIAEoCzIkLk55",
+                  "ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuTW92ZVNxdWFkSAASRQoQYXR0YWNr",
+                  "X21vdmVfdW5pdBgDIAEoCzIpLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wu",
+                  "QXR0YWNrTW92ZVVuaXRIABJHChFhdHRhY2tfbW92ZV9zcXVhZBgEIAEoCzIq",
+                  "Lk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuQXR0YWNrTW92ZVNxdWFkSAAS",
+                  "PAoLYXR0YWNrX3VuaXQYBSABKAsyJS5OeWR1c05ldHdvcmsuQVBJLlByb3Rv",
+                  "Y29sLkF0dGFja1VuaXRIABI+CgxhdHRhY2tfc3F1YWQYBiABKAsyJi5OeWR1",
+                  "c05ldHdvcmsuQVBJLlByb3RvY29sLkF0dGFja1NxdWFkSAASVgoZdXNlX3Rh",
+                  "cmdldGVkX2FiaWxpdHlfdW5pdBgHIAEoCzIxLk55ZHVzTmV0d29yay5BUEku",
+                  "UHJvdG9jb2wuVXNlVGFyZ2V0ZWRBYmlsaXR5VW5pdEgAElgKGnVzZV90YXJn",
+                  "ZXRlZF9hYmlsaXR5X3NxdWFkGAggASgLMjIuTnlkdXNOZXR3b3JrLkFQSS5Q",
+                  "cm90b2NvbC5Vc2VUYXJnZXRlZEFiaWxpdHlTcXVhZEgAEmEKH3VzZV9wb2lu",
+                  "dF9jZW50ZXJlZF9hYmlsaXR5X3VuaXQYCSABKAsyNi5OeWR1c05ldHdvcmsu",
+                  "QVBJLlByb3RvY29sLlVzZVBvaW50Q2VudGVyZWRBYmlsaXR5VW5pdEgAEmMK",
+                  "IHVzZV9wb2ludF9jZW50ZXJlZF9hYmlsaXR5X3NxdWFkGAogASgLMjcuTnlk",
+                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vc2VQb2ludENlbnRlcmVkQWJpbGl0",
+                  "eVNxdWFkSAASWgobdXNlX3RhcmdldGxlc3NfYWJpbGl0eV91bml0GAsgASgL",
+                  "MjMuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vc2VUYXJnZXRsZXNzQWJp",
+                  "bGl0eVVuaXRIABJcChx1c2VfdGFyZ2V0bGVzc19hYmlsaXR5X3NxdWFkGAwg",
+                  "ASgLMjQuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vc2VUYXJnZXRsZXNz",
+                  "QWJpbGl0eVNxdWFkSAASQwoPc21hcnRfbW92ZV91bml0GA0gASgLMiguTnlk",
+                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5TbWFydE1vdmVVbml0SAASRQoQc21h",
+                  "cnRfbW92ZV9zcXVhZBgOIAEoCzIpLk55ZHVzTmV0d29yay5BUEkuUHJvdG9j",
+                  "b2wuU21hcnRNb3ZlU3F1YWRIABJQChZzbWFydF9hdHRhY2tfbW92ZV91bml0",
+                  "GA8gASgLMi4uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5TbWFydEF0dGFj",
+                  "a01vdmVVbml0SAASUgoXc21hcnRfYXR0YWNrX21vdmVfc3F1YWQYECABKAsy",
+                  "Ly5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlNtYXJ0QXR0YWNrTW92ZVNx",
+                  "dWFkSAASRwoRc21hcnRfYXR0YWNrX3VuaXQYESABKAsyKi5OeWR1c05ldHdv",
+                  "cmsuQVBJLlByb3RvY29sLlNtYXJ0QXR0YWNrVW5pdEgAEkkKEnNtYXJ0X2F0",
+                  "dGFja19zcXVhZBgSIAEoCzIrLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wu",
+                  "U21hcnRBdHRhY2tTcXVhZEgAEkAKDXNxdWFkX3JlcXVlc3QYEyABKAsyJy5O",
+                  "eWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlNxdWFkUmVxdWVzdEgAQgkKB2Nv",
+                  "bW1hbmQiXgoITW92ZVVuaXQSEAoIdW5pdF90YWcYASABKAQSMQoFcG9pbnQY",
+                  "AiABKAsyIi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlBvaW50MkQSDQoF",
+                  "cXVldWUYAyABKAgiXAoJTW92ZVNxdWFkEg0KBXNxdWFkGAEgASgEEjEKBXBv",
                   "aW50GAIgASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJE",
-                  "Eg0KBXF1ZXVlGAMgASgIImIKD0F0dGFja01vdmVTcXVhZBINCgVzcXVhZBgB",
-                  "IAEoBBIxCgVwb2ludBgCIAEoCzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9j",
-                  "b2wuUG9pbnQyRBINCgVxdWV1ZRgDIAEoCCJFCgpBdHRhY2tVbml0EhMKC3Nv",
-                  "dXJjZV91bml0GAEgASgEEhMKC3RhcmdldF91bml0GAIgASgEEg0KBXF1ZXVl",
-                  "GAMgASgIIkAKC0F0dGFja1NxdWFkEg0KBXNxdWFkGAEgASgEEhMKC3Rhcmdl",
-                  "dF91bml0GAIgASgEEg0KBXF1ZXVlGAMgASgIImUKFlVzZVRhcmdldGVkQWJp",
-                  "bGl0eVVuaXQSEgoKYWJpbGl0eV9pZBgBIAEoBRITCgtzb3VyY2VfdW5pdBgC",
-                  "IAEoBBITCgt0YXJnZXRfdW5pdBgDIAEoBBINCgVxdWV1ZRgEIAEoCCJgChdV",
-                  "c2VUYXJnZXRlZEFiaWxpdHlTcXVhZBISCgphYmlsaXR5X2lkGAEgASgFEg0K",
-                  "BXNxdWFkGAIgASgEEhMKC3RhcmdldF91bml0GAMgASgEEg0KBXF1ZXVlGAQg",
-                  "ASgIIogBChtVc2VQb2ludENlbnRlcmVkQWJpbGl0eVVuaXQSEgoKYWJpbGl0",
-                  "eV9pZBgBIAEoBRITCgtzb3VyY2VfdW5pdBgCIAEoBBIxCgVwb2ludBgDIAEo",
-                  "CzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUG9pbnQyRBINCgVxdWV1",
-                  "ZRgEIAEoCCKDAQocVXNlUG9pbnRDZW50ZXJlZEFiaWxpdHlTcXVhZBISCgph",
-                  "YmlsaXR5X2lkGAEgASgFEg0KBXNxdWFkGAIgASgEEjEKBXBvaW50GAMgASgL",
-                  "MiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg0KBXF1ZXVl",
-                  "GAQgASgIIlIKGFVzZVRhcmdldGxlc3NBYmlsaXR5VW5pdBISCgphYmlsaXR5",
-                  "X2lkGAEgASgFEhMKC3NvdXJjZV91bml0GAIgASgEEg0KBXF1ZXVlGAMgASgI",
-                  "Ik0KGVVzZVRhcmdldGxlc3NBYmlsaXR5U3F1YWQSEgoKYWJpbGl0eV9pZBgB",
-                  "IAEoBRINCgVzcXVhZBgCIAEoBBINCgVxdWV1ZRgDIAEoCCJjCg1TbWFydE1v",
-                  "dmVVbml0EhAKCHVuaXRfdGFnGAEgASgEEjEKBXBvaW50GAIgASgLMiIuTnlk",
-                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg0KBXF1ZXVlGAMgASgI",
-                  "ImEKDlNtYXJ0TW92ZVNxdWFkEg0KBXNxdWFkGAEgASgEEjEKBXBvaW50GAIg",
-                  "ASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg0KBXF1",
-                  "ZXVlGAMgASgIImkKE1NtYXJ0QXR0YWNrTW92ZVVuaXQSEAoIdW5pdF90YWcY",
-                  "ASABKAQSMQoFcG9pbnQYAiABKAsyIi5OeWR1c05ldHdvcmsuQVBJLlByb3Rv",
-                  "Y29sLlBvaW50MkQSDQoFcXVldWUYAyABKAgiZwoUU21hcnRBdHRhY2tNb3Zl",
-                  "U3F1YWQSDQoFc3F1YWQYASABKAQSMQoFcG9pbnQYAiABKAsyIi5OeWR1c05l",
-                  "dHdvcmsuQVBJLlByb3RvY29sLlBvaW50MkQSDQoFcXVldWUYAyABKAgiSgoP",
-                  "U21hcnRBdHRhY2tVbml0EhMKC3NvdXJjZV91bml0GAEgASgEEhMKC3Rhcmdl",
-                  "dF91bml0GAIgASgEEg0KBXF1ZXVlGAMgASgIIkUKEFNtYXJ0QXR0YWNrU3F1",
-                  "YWQSDQoFc3F1YWQYASABKAQSEwoLdGFyZ2V0X3VuaXQYAiABKAQSDQoFcXVl",
-                  "dWUYAyABKAgigAIKDFNxdWFkUmVxdWVzdBI8CgxjcmVhdGVfc3F1YWQYASAB",
-                  "KAsyJi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLkNyZWF0ZVNxdWFkEjwK",
-                  "DHJlbW92ZV9zcXVhZBgCIAEoCzImLk55ZHVzTmV0d29yay5BUEkuUHJvdG9j",
-                  "b2wuUmVtb3ZlU3F1YWQSNgoJYWRkX3VuaXRzGAMgASgLMiMuTnlkdXNOZXR3",
-                  "b3JrLkFQSS5Qcm90b2NvbC5BZGRVbml0cxI8CgxyZW1vdmVfdW5pdHMYBCAB",
-                  "KAsyJi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlJlbW92ZVVuaXRzIkIK",
-                  "C0NyZWF0ZVNxdWFkEjMKBXNxdWFkGAEgASgLMiQuTnlkdXNOZXR3b3JrLkFQ",
-                  "SS5Qcm90b2NvbC5TcXVhZERhdGEiHwoLUmVtb3ZlU3F1YWQSEAoIc3F1YWRf",
-                  "aWQYASABKAQiKgoIQWRkVW5pdHMSEAoIc3F1YWRfaWQYASABKAQSDAoEdGFn",
-                  "cxgCIAMoBCItCgtSZW1vdmVVbml0cxIQCghzcXVhZF9pZBgBIAEoBBIMCgR0",
-                  "YWdzGAIgAygEIlYKClJhd1JlcXVlc3QSMwoHcmVxdWVzdBgBIAEoCzIiLk55",
-                  "ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUmVxdWVzdBITCgtnZXRSZXNwb25z",
-                  "ZRgCIAEoCCJJCgxOb3RpZmljYXRpb24SOQoEdHlwZRgBIAEoDjIrLk55ZHVz",
-                  "TmV0d29yay5BUEkuUHJvdG9jb2wuTm90aWZpY2F0aW9uVHlwZSIMCgpBYmF0",
-                  "aHVyTWFwItoCCgpDb2xvbnlEYXRhEg4KBmNvbF9pZBgBIAEoDRIxCgVwb2lu",
-                  "dBgCIAEoCzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUG9pbnQyRBIc",
-                  "ChRpc19zdGFydGluZ19sb2NhdGlvbhgDIAEoCBIxCghtaW5lcmFscxgEIAMo",
-                  "CzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5pdBIwCgd2ZXNwZW5l",
-                  "GAUgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Vbml0EjMKCnN0",
-                  "cnVjdHVyZXMYBiADKAsyHy5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlVu",
-                  "aXQSMAoHd29ya2VycxgHIAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9j",
-                  "b2wuVW5pdBIfChdkZXNpcmVkX3Zlc3BlbmVfd29ya2VycxgIIAEoBSJbCglT",
-                  "cXVhZERhdGESEAoIc3F1YWRfaWQYASABKAQSDAoEbmFtZRgCIAEoCRIuCgV1",
-                  "bml0cxgDIAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5pdCp0",
-                  "ChBOb3RpZmljYXRpb25UeXBlEggKBE5PTkUQABIOCgpJbml0aWFsaXplEAES",
-                  "DQoJR2FtZVN0YXJ0EAISDAoIR2FtZVN0ZXAQAxINCglHYW1lRW5kZWQQBBIL",
-                  "CgdSZXN0YXJ0EAUSDQoJVGVybWluYXRlEGNiBnByb3RvMw=="));
+                  "Eg0KBXF1ZXVlGAMgASgIImQKDkF0dGFja01vdmVVbml0EhAKCHVuaXRfdGFn",
+                  "GAEgASgEEjEKBXBvaW50GAIgASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90",
+                  "b2NvbC5Qb2ludDJEEg0KBXF1ZXVlGAMgASgIImIKD0F0dGFja01vdmVTcXVh",
+                  "ZBINCgVzcXVhZBgBIAEoBBIxCgVwb2ludBgCIAEoCzIiLk55ZHVzTmV0d29y",
+                  "ay5BUEkuUHJvdG9jb2wuUG9pbnQyRBINCgVxdWV1ZRgDIAEoCCJFCgpBdHRh",
+                  "Y2tVbml0EhMKC3NvdXJjZV91bml0GAEgASgEEhMKC3RhcmdldF91bml0GAIg",
+                  "ASgEEg0KBXF1ZXVlGAMgASgIIkAKC0F0dGFja1NxdWFkEg0KBXNxdWFkGAEg",
+                  "ASgEEhMKC3RhcmdldF91bml0GAIgASgEEg0KBXF1ZXVlGAMgASgIImUKFlVz",
+                  "ZVRhcmdldGVkQWJpbGl0eVVuaXQSEgoKYWJpbGl0eV9pZBgBIAEoBRITCgtz",
+                  "b3VyY2VfdW5pdBgCIAEoBBITCgt0YXJnZXRfdW5pdBgDIAEoBBINCgVxdWV1",
+                  "ZRgEIAEoCCJgChdVc2VUYXJnZXRlZEFiaWxpdHlTcXVhZBISCgphYmlsaXR5",
+                  "X2lkGAEgASgFEg0KBXNxdWFkGAIgASgEEhMKC3RhcmdldF91bml0GAMgASgE",
+                  "Eg0KBXF1ZXVlGAQgASgIIogBChtVc2VQb2ludENlbnRlcmVkQWJpbGl0eVVu",
+                  "aXQSEgoKYWJpbGl0eV9pZBgBIAEoBRITCgtzb3VyY2VfdW5pdBgCIAEoBBIx",
+                  "CgVwb2ludBgDIAEoCzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUG9p",
+                  "bnQyRBINCgVxdWV1ZRgEIAEoCCKDAQocVXNlUG9pbnRDZW50ZXJlZEFiaWxp",
+                  "dHlTcXVhZBISCgphYmlsaXR5X2lkGAEgASgFEg0KBXNxdWFkGAIgASgEEjEK",
+                  "BXBvaW50GAMgASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2lu",
+                  "dDJEEg0KBXF1ZXVlGAQgASgIIlIKGFVzZVRhcmdldGxlc3NBYmlsaXR5VW5p",
+                  "dBISCgphYmlsaXR5X2lkGAEgASgFEhMKC3NvdXJjZV91bml0GAIgASgEEg0K",
+                  "BXF1ZXVlGAMgASgIIk0KGVVzZVRhcmdldGxlc3NBYmlsaXR5U3F1YWQSEgoK",
+                  "YWJpbGl0eV9pZBgBIAEoBRINCgVzcXVhZBgCIAEoBBINCgVxdWV1ZRgDIAEo",
+                  "CCJjCg1TbWFydE1vdmVVbml0EhAKCHVuaXRfdGFnGAEgASgEEjEKBXBvaW50",
+                  "GAIgASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Qb2ludDJEEg0K",
+                  "BXF1ZXVlGAMgASgIImEKDlNtYXJ0TW92ZVNxdWFkEg0KBXNxdWFkGAEgASgE",
+                  "EjEKBXBvaW50GAIgASgLMiIuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5Q",
+                  "b2ludDJEEg0KBXF1ZXVlGAMgASgIImkKE1NtYXJ0QXR0YWNrTW92ZVVuaXQS",
+                  "EAoIdW5pdF90YWcYASABKAQSMQoFcG9pbnQYAiABKAsyIi5OeWR1c05ldHdv",
+                  "cmsuQVBJLlByb3RvY29sLlBvaW50MkQSDQoFcXVldWUYAyABKAgiZwoUU21h",
+                  "cnRBdHRhY2tNb3ZlU3F1YWQSDQoFc3F1YWQYASABKAQSMQoFcG9pbnQYAiAB",
+                  "KAsyIi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlBvaW50MkQSDQoFcXVl",
+                  "dWUYAyABKAgiSgoPU21hcnRBdHRhY2tVbml0EhMKC3NvdXJjZV91bml0GAEg",
+                  "ASgEEhMKC3RhcmdldF91bml0GAIgASgEEg0KBXF1ZXVlGAMgASgIIkUKEFNt",
+                  "YXJ0QXR0YWNrU3F1YWQSDQoFc3F1YWQYASABKAQSEwoLdGFyZ2V0X3VuaXQY",
+                  "AiABKAQSDQoFcXVldWUYAyABKAgigAIKDFNxdWFkUmVxdWVzdBI8CgxjcmVh",
+                  "dGVfc3F1YWQYASABKAsyJi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLkNy",
+                  "ZWF0ZVNxdWFkEjwKDHJlbW92ZV9zcXVhZBgCIAEoCzImLk55ZHVzTmV0d29y",
+                  "ay5BUEkuUHJvdG9jb2wuUmVtb3ZlU3F1YWQSNgoJYWRkX3VuaXRzGAMgASgL",
+                  "MiMuTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5BZGRVbml0cxI8CgxyZW1v",
+                  "dmVfdW5pdHMYBCABKAsyJi5OeWR1c05ldHdvcmsuQVBJLlByb3RvY29sLlJl",
+                  "bW92ZVVuaXRzIkIKC0NyZWF0ZVNxdWFkEjMKBXNxdWFkGAEgASgLMiQuTnlk",
+                  "dXNOZXR3b3JrLkFQSS5Qcm90b2NvbC5TcXVhZERhdGEiHwoLUmVtb3ZlU3F1",
+                  "YWQSEAoIc3F1YWRfaWQYASABKAQiKgoIQWRkVW5pdHMSEAoIc3F1YWRfaWQY",
+                  "ASABKAQSDAoEdGFncxgCIAMoBCItCgtSZW1vdmVVbml0cxIQCghzcXVhZF9p",
+                  "ZBgBIAEoBBIMCgR0YWdzGAIgAygEIlYKClJhd1JlcXVlc3QSMwoHcmVxdWVz",
+                  "dBgBIAEoCzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuUmVxdWVzdBIT",
+                  "CgtnZXRSZXNwb25zZRgCIAEoCCJJCgxOb3RpZmljYXRpb24SOQoEdHlwZRgB",
+                  "IAEoDjIrLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuTm90aWZpY2F0aW9u",
+                  "VHlwZSIMCgpBYmF0aHVyTWFwItoCCgpDb2xvbnlEYXRhEg4KBmNvbF9pZBgB",
+                  "IAEoDRIxCgVwb2ludBgCIAEoCzIiLk55ZHVzTmV0d29yay5BUEkuUHJvdG9j",
+                  "b2wuUG9pbnQyRBIcChRpc19zdGFydGluZ19sb2NhdGlvbhgDIAEoCBIxCght",
+                  "aW5lcmFscxgEIAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wuVW5p",
+                  "dBIwCgd2ZXNwZW5lGAUgAygLMh8uTnlkdXNOZXR3b3JrLkFQSS5Qcm90b2Nv",
+                  "bC5Vbml0EjMKCnN0cnVjdHVyZXMYBiADKAsyHy5OeWR1c05ldHdvcmsuQVBJ",
+                  "LlByb3RvY29sLlVuaXQSMAoHd29ya2VycxgHIAMoCzIfLk55ZHVzTmV0d29y",
+                  "ay5BUEkuUHJvdG9jb2wuVW5pdBIfChdkZXNpcmVkX3Zlc3BlbmVfd29ya2Vy",
+                  "cxgIIAEoBSJbCglTcXVhZERhdGESEAoIc3F1YWRfaWQYASABKAQSDAoEbmFt",
+                  "ZRgCIAEoCRIuCgV1bml0cxgDIAMoCzIfLk55ZHVzTmV0d29yay5BUEkuUHJv",
+                  "dG9jb2wuVW5pdCJWCgpJbnRlbEV2ZW50EhAKCHVuaXRfdGFnGAEgASgEEjYK",
+                  "CWNhc2VfdHlwZRgCIAEoDjIjLk55ZHVzTmV0d29yay5BUEkuUHJvdG9jb2wu",
+                  "Q2FzZVR5cGUqdAoQTm90aWZpY2F0aW9uVHlwZRIICgROT05FEAASDgoKSW5p",
+                  "dGlhbGl6ZRABEg0KCUdhbWVTdGFydBACEgwKCEdhbWVTdGVwEAMSDQoJR2Ft",
+                  "ZUVuZGVkEAQSCwoHUmVzdGFydBAFEg0KCVRlcm1pbmF0ZRBjKvgBCghDYXNl",
+                  "VHlwZRITCg9Xb3JrZXJEZXN0cm95ZWQQABITCg9NaW5lcmFsRGVwbGV0ZWQQ",
+                  "ARIRCg1Vbml0RGVzdHJveWVkEAISFAoQQWRkZWRIaWRkZW5FbmVteRADEhcK",
+                  "E1N0cnVjdHVyZUFkZGVkRW5lbXkQBBIWChJTdHJ1Y3R1cmVBZGRlZFNlbGYQ",
+                  "BRIWChJTdHJ1Y3R1cmVEZXN0cm95ZWQQBhISCg5Vbml0QWRkZWRFbmVteRAH",
+                  "EhEKDVVuaXRBZGRlZFNlbGYQCBIUChBXb3JrZXJBZGRlZEVuZW15EAkSEwoP",
+                  "V29ya2VyQWRkZWRTZWxmEApiBnByb3RvMw=="));
             descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-                new pbr::FileDescriptor[] { global::NydusNetwork.API.Protocol.CommonReflection.Descriptor,global::NydusNetwork.API.Protocol.Sc2ApiReflection.Descriptor,global::NydusNetwork.API.Protocol.DataReflection.Descriptor,global::NydusNetwork.API.Protocol.RawReflection.Descriptor,global::NydusNetwork.API.Protocol.ScoreReflection.Descriptor,},
-                new pbr::GeneratedClrTypeInfo(new[] { typeof(global::Abathur.Model.NotificationType),},new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.AbathurRequest), global::Abathur.Model.AbathurRequest.Parser, new[]{ "Intel", "Production", "Combat", "Raw" }, null, null, null),
+                new pbr::FileDescriptor[] { global::NydusNetwork.API.Protocol.CommonReflection.Descriptor,global::NydusNetwork.API.Protocol.Sc2ApiReflection.Descriptor,global::NydusNetwork.API.Protocol.DataReflection.Descriptor,global::NydusNetwork.API.Protocol.RawReflection.Descriptor,global::NydusNetwork.API.Protocol.ScoreReflection.Descriptor,global::NydusNetwork.API.Protocol.SpatialReflection.Descriptor,global::NydusNetwork.API.Protocol.UiReflection.Descriptor,},
+                new pbr::GeneratedClrTypeInfo(new[] { typeof(global::Abathur.Model.NotificationType),typeof(global::Abathur.Model.CaseType),},new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.AbathurRequest), global::Abathur.Model.AbathurRequest.Parser, new[]{ "Intel", "Production", "Combat", "Raw", "OnlyAsync" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.AbathurResponse), global::Abathur.Model.AbathurResponse.Parser, new[]{ "Intel", "Notification", "RawResponse" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.IntelRequest), global::Abathur.Model.IntelRequest.Parser, new[]{ "Map", "Score", "Common", "UpgradesSelf", "BuildingsSelf", "UnitsSelf", "WorkersSelf", "Destructibles", "StructuresEnemy", "UnitsEnemy", "WorkersEnemy", "PrimaryColony", "Colonies", "MineralFields", "VespeneGeysers", "ProductionQueue", "Squads", "GameLoop" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.IntelResponse), global::Abathur.Model.IntelResponse.Parser, new[]{ "Map", "Score", "Common", "UpgradesSelf", "BuildingsSelf", "UnitsSelf", "WorkersSelf", "Destructibles", "StructuresEnemy", "UnitsEnemy", "WorkersEnemy", "PrimaryColony", "Colonies", "MineralFields", "VespeneGeysers", "ProductionQueue", "Squads", "GameLoop" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.IntelRequest), global::Abathur.Model.IntelRequest.Parser, new[]{ "Map", "Score", "Common", "UpgradesSelf", "BuildingsSelf", "UnitsSelf", "WorkersSelf", "Destructibles", "StructuresEnemy", "UnitsEnemy", "WorkersEnemy", "PrimaryColony", "Colonies", "MineralFields", "VespeneGeysers", "ProductionQueue", "Squads", "GameLoop", "FeatureLayerData", "RenderData", "UiData" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.IntelResponse), global::Abathur.Model.IntelResponse.Parser, new[]{ "Map", "Score", "Common", "UpgradesSelf", "BuildingsSelf", "UnitsSelf", "WorkersSelf", "Destructibles", "StructuresEnemy", "UnitsEnemy", "WorkersEnemy", "PrimaryColony", "Colonies", "MineralFields", "VespeneGeysers", "ProductionQueue", "Squads", "GameLoop", "FeatureLayerData", "RenderData", "UiData", "Events" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.ProductionRequest), global::Abathur.Model.ProductionRequest.Parser, new[]{ "ClearBuildOrder", "QueueUnit", "QueueTech" }, new[]{ "Call" }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.ClearBuildOrder), global::Abathur.Model.ClearBuildOrder.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.QueueUnit), global::Abathur.Model.QueueUnit.Parser, new[]{ "UnitId", "Pos", "Spacing", "Skippable" }, null, null, null),
@@ -213,7 +230,8 @@ namespace Abathur.Model {
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.Notification), global::Abathur.Model.Notification.Parser, new[]{ "Type" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.AbathurMap), global::Abathur.Model.AbathurMap.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.ColonyData), global::Abathur.Model.ColonyData.Parser, new[]{ "ColId", "Point", "IsStartingLocation", "Minerals", "Vespene", "Structures", "Workers", "DesiredVespeneWorkers" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.SquadData), global::Abathur.Model.SquadData.Parser, new[]{ "SquadId", "Name", "Units" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.SquadData), global::Abathur.Model.SquadData.Parser, new[]{ "SquadId", "Name", "Units" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Abathur.Model.IntelEvent), global::Abathur.Model.IntelEvent.Parser, new[]{ "UnitTag", "CaseType" }, null, null, null)
                 }));
         }
         #endregion
@@ -228,6 +246,20 @@ namespace Abathur.Model {
         [pbr::OriginalName("GameEnded")] GameEnded = 4,
         [pbr::OriginalName("Restart")] Restart = 5,
         [pbr::OriginalName("Terminate")] Terminate = 99,
+    }
+
+    public enum CaseType {
+        [pbr::OriginalName("WorkerDestroyed")] WorkerDestroyed = 0,
+        [pbr::OriginalName("MineralDepleted")] MineralDepleted = 1,
+        [pbr::OriginalName("UnitDestroyed")] UnitDestroyed = 2,
+        [pbr::OriginalName("AddedHiddenEnemy")] AddedHiddenEnemy = 3,
+        [pbr::OriginalName("StructureAddedEnemy")] StructureAddedEnemy = 4,
+        [pbr::OriginalName("StructureAddedSelf")] StructureAddedSelf = 5,
+        [pbr::OriginalName("StructureDestroyed")] StructureDestroyed = 6,
+        [pbr::OriginalName("UnitAddedEnemy")] UnitAddedEnemy = 7,
+        [pbr::OriginalName("UnitAddedSelf")] UnitAddedSelf = 8,
+        [pbr::OriginalName("WorkerAddedEnemy")] WorkerAddedEnemy = 9,
+        [pbr::OriginalName("WorkerAddedSelf")] WorkerAddedSelf = 10,
     }
 
     #endregion
@@ -262,6 +294,7 @@ namespace Abathur.Model {
             production_ = other.production_.Clone();
             combat_ = other.combat_.Clone();
             Raw = other.raw_ != null ? other.Raw.Clone() : null;
+            onlyAsync_ = other.onlyAsync_;
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -312,6 +345,17 @@ namespace Abathur.Model {
             }
         }
 
+        /// <summary>Field number for the "only_async" field.</summary>
+        public const int OnlyAsyncFieldNumber = 6;
+        private bool onlyAsync_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool OnlyAsync {
+            get { return onlyAsync_; }
+            set {
+                onlyAsync_ = value;
+            }
+        }
+
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public override bool Equals(object other) {
             return Equals(other as AbathurRequest);
@@ -333,6 +377,8 @@ namespace Abathur.Model {
                 return false;
             if(!object.Equals(Raw,other.Raw))
                 return false;
+            if(OnlyAsync != other.OnlyAsync)
+                return false;
             return Equals(_unknownFields,other._unknownFields);
         }
 
@@ -345,6 +391,8 @@ namespace Abathur.Model {
             hash ^= combat_.GetHashCode();
             if(raw_ != null)
                 hash ^= Raw.GetHashCode();
+            if(OnlyAsync != false)
+                hash ^= OnlyAsync.GetHashCode();
             if(_unknownFields != null) {
                 hash ^= _unknownFields.GetHashCode();
             }
@@ -368,6 +416,10 @@ namespace Abathur.Model {
                 output.WriteRawTag(42);
                 output.WriteMessage(Raw);
             }
+            if(OnlyAsync != false) {
+                output.WriteRawTag(48);
+                output.WriteBool(OnlyAsync);
+            }
             if(_unknownFields != null) {
                 _unknownFields.WriteTo(output);
             }
@@ -383,6 +435,9 @@ namespace Abathur.Model {
             size += combat_.CalculateSize(_repeated_combat_codec);
             if(raw_ != null) {
                 size += 1 + pb::CodedOutputStream.ComputeMessageSize(Raw);
+            }
+            if(OnlyAsync != false) {
+                size += 1 + 1;
             }
             if(_unknownFields != null) {
                 size += _unknownFields.CalculateSize();
@@ -408,6 +463,9 @@ namespace Abathur.Model {
                     raw_ = new global::Abathur.Model.RawRequest();
                 }
                 Raw.MergeFrom(other.Raw);
+            }
+            if(other.OnlyAsync != false) {
+                OnlyAsync = other.OnlyAsync;
             }
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields,other._unknownFields);
         }
@@ -440,6 +498,10 @@ namespace Abathur.Model {
                                 raw_ = new global::Abathur.Model.RawRequest();
                             }
                             input.ReadMessage(raw_);
+                            break;
+                        }
+                    case 48: {
+                            OnlyAsync = input.ReadBool();
                             break;
                         }
                 }
@@ -700,6 +762,9 @@ namespace Abathur.Model {
             productionQueue_ = other.productionQueue_;
             squads_ = other.squads_;
             gameLoop_ = other.gameLoop_;
+            featureLayerData_ = other.featureLayerData_;
+            renderData_ = other.renderData_;
+            uiData_ = other.uiData_;
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -830,7 +895,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "primary_colony" field.</summary>
-        public const int PrimaryColonyFieldNumber = 15;
+        public const int PrimaryColonyFieldNumber = 12;
         private bool primaryColony_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool PrimaryColony {
@@ -841,7 +906,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "colonies" field.</summary>
-        public const int ColoniesFieldNumber = 16;
+        public const int ColoniesFieldNumber = 13;
         private bool colonies_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool Colonies {
@@ -852,7 +917,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "mineral_fields" field.</summary>
-        public const int MineralFieldsFieldNumber = 17;
+        public const int MineralFieldsFieldNumber = 14;
         private bool mineralFields_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool MineralFields {
@@ -863,7 +928,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "VespeneGeysers" field.</summary>
-        public const int VespeneGeysersFieldNumber = 18;
+        public const int VespeneGeysersFieldNumber = 15;
         private bool vespeneGeysers_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool VespeneGeysers {
@@ -874,7 +939,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "production_queue" field.</summary>
-        public const int ProductionQueueFieldNumber = 19;
+        public const int ProductionQueueFieldNumber = 16;
         private bool productionQueue_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool ProductionQueue {
@@ -885,7 +950,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "squads" field.</summary>
-        public const int SquadsFieldNumber = 20;
+        public const int SquadsFieldNumber = 17;
         private bool squads_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool Squads {
@@ -896,13 +961,46 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "game_loop" field.</summary>
-        public const int GameLoopFieldNumber = 21;
+        public const int GameLoopFieldNumber = 18;
         private bool gameLoop_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public bool GameLoop {
             get { return gameLoop_; }
             set {
                 gameLoop_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "feature_layer_data" field.</summary>
+        public const int FeatureLayerDataFieldNumber = 19;
+        private bool featureLayerData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool FeatureLayerData {
+            get { return featureLayerData_; }
+            set {
+                featureLayerData_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "render_data" field.</summary>
+        public const int RenderDataFieldNumber = 20;
+        private bool renderData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool RenderData {
+            get { return renderData_; }
+            set {
+                renderData_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "ui_data" field.</summary>
+        public const int UiDataFieldNumber = 21;
+        private bool uiData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool UiData {
+            get { return uiData_; }
+            set {
+                uiData_ = value;
             }
         }
 
@@ -955,6 +1053,12 @@ namespace Abathur.Model {
                 return false;
             if(GameLoop != other.GameLoop)
                 return false;
+            if(FeatureLayerData != other.FeatureLayerData)
+                return false;
+            if(RenderData != other.RenderData)
+                return false;
+            if(UiData != other.UiData)
+                return false;
             return Equals(_unknownFields,other._unknownFields);
         }
 
@@ -997,6 +1101,12 @@ namespace Abathur.Model {
                 hash ^= Squads.GetHashCode();
             if(GameLoop != false)
                 hash ^= GameLoop.GetHashCode();
+            if(FeatureLayerData != false)
+                hash ^= FeatureLayerData.GetHashCode();
+            if(RenderData != false)
+                hash ^= RenderData.GetHashCode();
+            if(UiData != false)
+                hash ^= UiData.GetHashCode();
             if(_unknownFields != null) {
                 hash ^= _unknownFields.GetHashCode();
             }
@@ -1055,32 +1165,44 @@ namespace Abathur.Model {
                 output.WriteBool(WorkersEnemy);
             }
             if(PrimaryColony != false) {
-                output.WriteRawTag(120);
+                output.WriteRawTag(96);
                 output.WriteBool(PrimaryColony);
             }
             if(Colonies != false) {
-                output.WriteRawTag(128,1);
+                output.WriteRawTag(104);
                 output.WriteBool(Colonies);
             }
             if(MineralFields != false) {
-                output.WriteRawTag(136,1);
+                output.WriteRawTag(112);
                 output.WriteBool(MineralFields);
             }
             if(VespeneGeysers != false) {
-                output.WriteRawTag(144,1);
+                output.WriteRawTag(120);
                 output.WriteBool(VespeneGeysers);
             }
             if(ProductionQueue != false) {
-                output.WriteRawTag(152,1);
+                output.WriteRawTag(128,1);
                 output.WriteBool(ProductionQueue);
             }
             if(Squads != false) {
-                output.WriteRawTag(160,1);
+                output.WriteRawTag(136,1);
                 output.WriteBool(Squads);
             }
             if(GameLoop != false) {
-                output.WriteRawTag(168,1);
+                output.WriteRawTag(144,1);
                 output.WriteBool(GameLoop);
+            }
+            if(FeatureLayerData != false) {
+                output.WriteRawTag(152,1);
+                output.WriteBool(FeatureLayerData);
+            }
+            if(RenderData != false) {
+                output.WriteRawTag(160,1);
+                output.WriteBool(RenderData);
+            }
+            if(UiData != false) {
+                output.WriteRawTag(168,1);
+                output.WriteBool(UiData);
             }
             if(_unknownFields != null) {
                 _unknownFields.WriteTo(output);
@@ -1127,13 +1249,13 @@ namespace Abathur.Model {
                 size += 1 + 1;
             }
             if(Colonies != false) {
-                size += 2 + 1;
+                size += 1 + 1;
             }
             if(MineralFields != false) {
-                size += 2 + 1;
+                size += 1 + 1;
             }
             if(VespeneGeysers != false) {
-                size += 2 + 1;
+                size += 1 + 1;
             }
             if(ProductionQueue != false) {
                 size += 2 + 1;
@@ -1142,6 +1264,15 @@ namespace Abathur.Model {
                 size += 2 + 1;
             }
             if(GameLoop != false) {
+                size += 2 + 1;
+            }
+            if(FeatureLayerData != false) {
+                size += 2 + 1;
+            }
+            if(RenderData != false) {
+                size += 2 + 1;
+            }
+            if(UiData != false) {
                 size += 2 + 1;
             }
             if(_unknownFields != null) {
@@ -1209,6 +1340,15 @@ namespace Abathur.Model {
             if(other.GameLoop != false) {
                 GameLoop = other.GameLoop;
             }
+            if(other.FeatureLayerData != false) {
+                FeatureLayerData = other.FeatureLayerData;
+            }
+            if(other.RenderData != false) {
+                RenderData = other.RenderData;
+            }
+            if(other.UiData != false) {
+                UiData = other.UiData;
+            }
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields,other._unknownFields);
         }
 
@@ -1264,32 +1404,44 @@ namespace Abathur.Model {
                             WorkersEnemy = input.ReadBool();
                             break;
                         }
-                    case 120: {
+                    case 96: {
                             PrimaryColony = input.ReadBool();
                             break;
                         }
-                    case 128: {
+                    case 104: {
                             Colonies = input.ReadBool();
                             break;
                         }
-                    case 136: {
+                    case 112: {
                             MineralFields = input.ReadBool();
                             break;
                         }
-                    case 144: {
+                    case 120: {
                             VespeneGeysers = input.ReadBool();
                             break;
                         }
-                    case 152: {
+                    case 128: {
                             ProductionQueue = input.ReadBool();
                             break;
                         }
-                    case 160: {
+                    case 136: {
                             Squads = input.ReadBool();
                             break;
                         }
-                    case 168: {
+                    case 144: {
                             GameLoop = input.ReadBool();
+                            break;
+                        }
+                    case 152: {
+                            FeatureLayerData = input.ReadBool();
+                            break;
+                        }
+                    case 160: {
+                            RenderData = input.ReadBool();
+                            break;
+                        }
+                    case 168: {
+                            UiData = input.ReadBool();
                             break;
                         }
                 }
@@ -1341,6 +1493,10 @@ namespace Abathur.Model {
             productionQueue_ = other.productionQueue_.Clone();
             squads_ = other.squads_.Clone();
             gameLoop_ = other.gameLoop_;
+            FeatureLayerData = other.featureLayerData_ != null ? other.FeatureLayerData.Clone() : null;
+            RenderData = other.renderData_ != null ? other.RenderData.Clone() : null;
+            UiData = other.uiData_ != null ? other.UiData.Clone() : null;
+            events_ = other.events_.Clone();
             _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
         }
 
@@ -1463,7 +1619,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "primary_colony" field.</summary>
-        public const int PrimaryColonyFieldNumber = 15;
+        public const int PrimaryColonyFieldNumber = 12;
         private global::Abathur.Model.ColonyData primaryColony_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public global::Abathur.Model.ColonyData PrimaryColony {
@@ -1474,9 +1630,9 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "colonies" field.</summary>
-        public const int ColoniesFieldNumber = 16;
+        public const int ColoniesFieldNumber = 13;
         private static readonly pb::FieldCodec<global::Abathur.Model.ColonyData> _repeated_colonies_codec
-            = pb::FieldCodec.ForMessage(130,global::Abathur.Model.ColonyData.Parser);
+            = pb::FieldCodec.ForMessage(106,global::Abathur.Model.ColonyData.Parser);
         private readonly pbc::RepeatedField<global::Abathur.Model.ColonyData> colonies_ = new pbc::RepeatedField<global::Abathur.Model.ColonyData>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Abathur.Model.ColonyData> Colonies {
@@ -1484,9 +1640,9 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "mineral_fields" field.</summary>
-        public const int MineralFieldsFieldNumber = 17;
+        public const int MineralFieldsFieldNumber = 14;
         private static readonly pb::FieldCodec<global::NydusNetwork.API.Protocol.Unit> _repeated_mineralFields_codec
-            = pb::FieldCodec.ForMessage(138,global::NydusNetwork.API.Protocol.Unit.Parser);
+            = pb::FieldCodec.ForMessage(114,global::NydusNetwork.API.Protocol.Unit.Parser);
         private readonly pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit> mineralFields_ = new pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit> MineralFields {
@@ -1494,9 +1650,9 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "vespene_geysers" field.</summary>
-        public const int VespeneGeysersFieldNumber = 18;
+        public const int VespeneGeysersFieldNumber = 15;
         private static readonly pb::FieldCodec<global::NydusNetwork.API.Protocol.Unit> _repeated_vespeneGeysers_codec
-            = pb::FieldCodec.ForMessage(146,global::NydusNetwork.API.Protocol.Unit.Parser);
+            = pb::FieldCodec.ForMessage(122,global::NydusNetwork.API.Protocol.Unit.Parser);
         private readonly pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit> vespeneGeysers_ = new pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::NydusNetwork.API.Protocol.Unit> VespeneGeysers {
@@ -1504,9 +1660,9 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "production_queue" field.</summary>
-        public const int ProductionQueueFieldNumber = 19;
+        public const int ProductionQueueFieldNumber = 16;
         private static readonly pb::FieldCodec<global::NydusNetwork.API.Protocol.UnitTypeData> _repeated_productionQueue_codec
-            = pb::FieldCodec.ForMessage(154,global::NydusNetwork.API.Protocol.UnitTypeData.Parser);
+            = pb::FieldCodec.ForMessage(130,global::NydusNetwork.API.Protocol.UnitTypeData.Parser);
         private readonly pbc::RepeatedField<global::NydusNetwork.API.Protocol.UnitTypeData> productionQueue_ = new pbc::RepeatedField<global::NydusNetwork.API.Protocol.UnitTypeData>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::NydusNetwork.API.Protocol.UnitTypeData> ProductionQueue {
@@ -1514,9 +1670,9 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "squads" field.</summary>
-        public const int SquadsFieldNumber = 20;
+        public const int SquadsFieldNumber = 17;
         private static readonly pb::FieldCodec<global::Abathur.Model.SquadData> _repeated_squads_codec
-            = pb::FieldCodec.ForMessage(162,global::Abathur.Model.SquadData.Parser);
+            = pb::FieldCodec.ForMessage(138,global::Abathur.Model.SquadData.Parser);
         private readonly pbc::RepeatedField<global::Abathur.Model.SquadData> squads_ = new pbc::RepeatedField<global::Abathur.Model.SquadData>();
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public pbc::RepeatedField<global::Abathur.Model.SquadData> Squads {
@@ -1524,7 +1680,7 @@ namespace Abathur.Model {
         }
 
         /// <summary>Field number for the "game_loop" field.</summary>
-        public const int GameLoopFieldNumber = 21;
+        public const int GameLoopFieldNumber = 18;
         private uint gameLoop_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public uint GameLoop {
@@ -1532,6 +1688,49 @@ namespace Abathur.Model {
             set {
                 gameLoop_ = value;
             }
+        }
+
+        /// <summary>Field number for the "feature_layer_data" field.</summary>
+        public const int FeatureLayerDataFieldNumber = 19;
+        private global::NydusNetwork.API.Protocol.ObservationFeatureLayer featureLayerData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::NydusNetwork.API.Protocol.ObservationFeatureLayer FeatureLayerData {
+            get { return featureLayerData_; }
+            set {
+                featureLayerData_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "render_data" field.</summary>
+        public const int RenderDataFieldNumber = 20;
+        private global::NydusNetwork.API.Protocol.ObservationRender renderData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::NydusNetwork.API.Protocol.ObservationRender RenderData {
+            get { return renderData_; }
+            set {
+                renderData_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "ui_data" field.</summary>
+        public const int UiDataFieldNumber = 21;
+        private global::NydusNetwork.API.Protocol.ObservationUI uiData_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::NydusNetwork.API.Protocol.ObservationUI UiData {
+            get { return uiData_; }
+            set {
+                uiData_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "events" field.</summary>
+        public const int EventsFieldNumber = 50;
+        private static readonly pb::FieldCodec<global::Abathur.Model.IntelEvent> _repeated_events_codec
+            = pb::FieldCodec.ForMessage(402,global::Abathur.Model.IntelEvent.Parser);
+        private readonly pbc::RepeatedField<global::Abathur.Model.IntelEvent> events_ = new pbc::RepeatedField<global::Abathur.Model.IntelEvent>();
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public pbc::RepeatedField<global::Abathur.Model.IntelEvent> Events {
+            get { return events_; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1583,6 +1782,14 @@ namespace Abathur.Model {
                 return false;
             if(GameLoop != other.GameLoop)
                 return false;
+            if(!object.Equals(FeatureLayerData,other.FeatureLayerData))
+                return false;
+            if(!object.Equals(RenderData,other.RenderData))
+                return false;
+            if(!object.Equals(UiData,other.UiData))
+                return false;
+            if(!events_.Equals(other.events_))
+                return false;
             return Equals(_unknownFields,other._unknownFields);
         }
 
@@ -1612,6 +1819,13 @@ namespace Abathur.Model {
             hash ^= squads_.GetHashCode();
             if(GameLoop != 0)
                 hash ^= GameLoop.GetHashCode();
+            if(featureLayerData_ != null)
+                hash ^= FeatureLayerData.GetHashCode();
+            if(renderData_ != null)
+                hash ^= RenderData.GetHashCode();
+            if(uiData_ != null)
+                hash ^= UiData.GetHashCode();
+            hash ^= events_.GetHashCode();
             if(_unknownFields != null) {
                 hash ^= _unknownFields.GetHashCode();
             }
@@ -1646,7 +1860,7 @@ namespace Abathur.Model {
             unitsEnemy_.WriteTo(output,_repeated_unitsEnemy_codec);
             workersEnemy_.WriteTo(output,_repeated_workersEnemy_codec);
             if(primaryColony_ != null) {
-                output.WriteRawTag(122);
+                output.WriteRawTag(98);
                 output.WriteMessage(PrimaryColony);
             }
             colonies_.WriteTo(output,_repeated_colonies_codec);
@@ -1655,9 +1869,22 @@ namespace Abathur.Model {
             productionQueue_.WriteTo(output,_repeated_productionQueue_codec);
             squads_.WriteTo(output,_repeated_squads_codec);
             if(GameLoop != 0) {
-                output.WriteRawTag(168,1);
+                output.WriteRawTag(144,1);
                 output.WriteUInt32(GameLoop);
             }
+            if(featureLayerData_ != null) {
+                output.WriteRawTag(154,1);
+                output.WriteMessage(FeatureLayerData);
+            }
+            if(renderData_ != null) {
+                output.WriteRawTag(162,1);
+                output.WriteMessage(RenderData);
+            }
+            if(uiData_ != null) {
+                output.WriteRawTag(170,1);
+                output.WriteMessage(UiData);
+            }
+            events_.WriteTo(output,_repeated_events_codec);
             if(_unknownFields != null) {
                 _unknownFields.WriteTo(output);
             }
@@ -1694,6 +1921,16 @@ namespace Abathur.Model {
             if(GameLoop != 0) {
                 size += 2 + pb::CodedOutputStream.ComputeUInt32Size(GameLoop);
             }
+            if(featureLayerData_ != null) {
+                size += 2 + pb::CodedOutputStream.ComputeMessageSize(FeatureLayerData);
+            }
+            if(renderData_ != null) {
+                size += 2 + pb::CodedOutputStream.ComputeMessageSize(RenderData);
+            }
+            if(uiData_ != null) {
+                size += 2 + pb::CodedOutputStream.ComputeMessageSize(UiData);
+            }
+            size += events_.CalculateSize(_repeated_events_codec);
             if(_unknownFields != null) {
                 size += _unknownFields.CalculateSize();
             }
@@ -1745,6 +1982,25 @@ namespace Abathur.Model {
             if(other.GameLoop != 0) {
                 GameLoop = other.GameLoop;
             }
+            if(other.featureLayerData_ != null) {
+                if(featureLayerData_ == null) {
+                    featureLayerData_ = new global::NydusNetwork.API.Protocol.ObservationFeatureLayer();
+                }
+                FeatureLayerData.MergeFrom(other.FeatureLayerData);
+            }
+            if(other.renderData_ != null) {
+                if(renderData_ == null) {
+                    renderData_ = new global::NydusNetwork.API.Protocol.ObservationRender();
+                }
+                RenderData.MergeFrom(other.RenderData);
+            }
+            if(other.uiData_ != null) {
+                if(uiData_ == null) {
+                    uiData_ = new global::NydusNetwork.API.Protocol.ObservationUI();
+                }
+                UiData.MergeFrom(other.UiData);
+            }
+            events_.Add(other.events_);
             _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields,other._unknownFields);
         }
 
@@ -1809,35 +2065,60 @@ namespace Abathur.Model {
                             workersEnemy_.AddEntriesFrom(input,_repeated_workersEnemy_codec);
                             break;
                         }
-                    case 122: {
+                    case 98: {
                             if(primaryColony_ == null) {
                                 primaryColony_ = new global::Abathur.Model.ColonyData();
                             }
                             input.ReadMessage(primaryColony_);
                             break;
                         }
-                    case 130: {
+                    case 106: {
                             colonies_.AddEntriesFrom(input,_repeated_colonies_codec);
                             break;
                         }
-                    case 138: {
+                    case 114: {
                             mineralFields_.AddEntriesFrom(input,_repeated_mineralFields_codec);
                             break;
                         }
-                    case 146: {
+                    case 122: {
                             vespeneGeysers_.AddEntriesFrom(input,_repeated_vespeneGeysers_codec);
                             break;
                         }
-                    case 154: {
+                    case 130: {
                             productionQueue_.AddEntriesFrom(input,_repeated_productionQueue_codec);
                             break;
                         }
-                    case 162: {
+                    case 138: {
                             squads_.AddEntriesFrom(input,_repeated_squads_codec);
                             break;
                         }
-                    case 168: {
+                    case 144: {
                             GameLoop = input.ReadUInt32();
+                            break;
+                        }
+                    case 154: {
+                            if(featureLayerData_ == null) {
+                                featureLayerData_ = new global::NydusNetwork.API.Protocol.ObservationFeatureLayer();
+                            }
+                            input.ReadMessage(featureLayerData_);
+                            break;
+                        }
+                    case 162: {
+                            if(renderData_ == null) {
+                                renderData_ = new global::NydusNetwork.API.Protocol.ObservationRender();
+                            }
+                            input.ReadMessage(renderData_);
+                            break;
+                        }
+                    case 170: {
+                            if(uiData_ == null) {
+                                uiData_ = new global::NydusNetwork.API.Protocol.ObservationUI();
+                            }
+                            input.ReadMessage(uiData_);
+                            break;
+                        }
+                    case 402: {
+                            events_.AddEntriesFrom(input,_repeated_events_codec);
                             break;
                         }
                 }
@@ -8812,6 +9093,167 @@ namespace Abathur.Model {
                         }
                     case 26: {
                             units_.AddEntriesFrom(input,_repeated_units_codec);
+                            break;
+                        }
+                }
+            }
+        }
+
+    }
+
+    public sealed partial class IntelEvent : pb::IMessage<IntelEvent> {
+        private static readonly pb::MessageParser<IntelEvent> _parser = new pb::MessageParser<IntelEvent>(() => new IntelEvent());
+        private pb::UnknownFieldSet _unknownFields;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pb::MessageParser<IntelEvent> Parser { get { return _parser; } }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public static pbr::MessageDescriptor Descriptor {
+            get { return global::Abathur.Model.AbathurReflection.Descriptor.MessageTypes[37]; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        pbr::MessageDescriptor pb::IMessage.Descriptor {
+            get { return Descriptor; }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public IntelEvent() {
+            OnConstruction();
+        }
+
+        partial void OnConstruction();
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public IntelEvent(IntelEvent other) : this() {
+            unitTag_ = other.unitTag_;
+            caseType_ = other.caseType_;
+            _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public IntelEvent Clone() {
+            return new IntelEvent(this);
+        }
+
+        /// <summary>Field number for the "unit_tag" field.</summary>
+        public const int UnitTagFieldNumber = 1;
+        private ulong unitTag_;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public ulong UnitTag {
+            get { return unitTag_; }
+            set {
+                unitTag_ = value;
+            }
+        }
+
+        /// <summary>Field number for the "case_type" field.</summary>
+        public const int CaseTypeFieldNumber = 2;
+        private global::Abathur.Model.CaseType caseType_ = 0;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public global::Abathur.Model.CaseType CaseType {
+            get { return caseType_; }
+            set {
+                caseType_ = value;
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override bool Equals(object other) {
+            return Equals(other as IntelEvent);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public bool Equals(IntelEvent other) {
+            if(ReferenceEquals(other,null)) {
+                return false;
+            }
+            if(ReferenceEquals(other,this)) {
+                return true;
+            }
+            if(UnitTag != other.UnitTag)
+                return false;
+            if(CaseType != other.CaseType)
+                return false;
+            return Equals(_unknownFields,other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override int GetHashCode() {
+            int hash = 1;
+            if(UnitTag != 0UL)
+                hash ^= UnitTag.GetHashCode();
+            if(CaseType != 0)
+                hash ^= CaseType.GetHashCode();
+            if(_unknownFields != null) {
+                hash ^= _unknownFields.GetHashCode();
+            }
+            return hash;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public override string ToString() {
+            return pb::JsonFormatter.ToDiagnosticString(this);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void WriteTo(pb::CodedOutputStream output) {
+            if(UnitTag != 0UL) {
+                output.WriteRawTag(8);
+                output.WriteUInt64(UnitTag);
+            }
+            if(CaseType != 0) {
+                output.WriteRawTag(16);
+                output.WriteEnum((int)CaseType);
+            }
+            if(_unknownFields != null) {
+                _unknownFields.WriteTo(output);
+            }
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public int CalculateSize() {
+            int size = 0;
+            if(UnitTag != 0UL) {
+                size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UnitTag);
+            }
+            if(CaseType != 0) {
+                size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)CaseType);
+            }
+            if(_unknownFields != null) {
+                size += _unknownFields.CalculateSize();
+            }
+            return size;
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(IntelEvent other) {
+            if(other == null) {
+                return;
+            }
+            if(other.UnitTag != 0UL) {
+                UnitTag = other.UnitTag;
+            }
+            if(other.CaseType != 0) {
+                CaseType = other.CaseType;
+            }
+            _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields,other._unknownFields);
+        }
+
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public void MergeFrom(pb::CodedInputStream input) {
+            uint tag;
+            while((tag = input.ReadTag()) != 0) {
+                switch(tag) {
+                    default:
+                        _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields,input);
+                        break;
+                    case 8: {
+                            UnitTag = input.ReadUInt64();
+                            break;
+                        }
+                    case 16: {
+                            caseType_ = (global::Abathur.Model.CaseType)input.ReadEnum();
                             break;
                         }
                 }

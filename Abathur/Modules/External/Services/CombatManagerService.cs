@@ -2,9 +2,9 @@
 using Abathur.Core;
 using Abathur.Model;
 using Abathur.Repositories;
+using NydusNetwork.API.Protocol;
 
-namespace Abathur.Modules.Services
-{
+namespace Abathur.Modules.External.Services {
     public class CombatManagerService : ICombatManagerService {
         private ISquadRepository _repository;
         private ICombatManager _manager;

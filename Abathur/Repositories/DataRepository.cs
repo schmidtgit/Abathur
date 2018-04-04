@@ -2,8 +2,7 @@
 using NydusNetwork.API.Protocol;
 using NydusNetwork.Logging;
 
-namespace Abathur.Repositories
-{
+namespace Abathur.Repositories {
     public class DataRepository : IAbilityRepository, IBuffRepository, IUpgradeRepository, IUnitTypeRepository {
         private Dictionary<uint,AbilityData> abilityDictionary;
         private Dictionary<uint,BuffData> buffDictionary;
@@ -17,6 +16,10 @@ namespace Abathur.Repositories
         }
 
         public void Initialize(Essence essence) {
+#if DEBUG
+            if(essence.Abilities.Count == 0 || essence.Buffs.Count == 0 || essence.UnitTypes.Count == 0 || essence.Upgrades.Count == 0)
+                log?.LogError("DataRepository: Essence file seems to be missing data!");
+#endif
             abilityDictionary = new Dictionary<uint,AbilityData>();
             buffDictionary = new Dictionary<uint,BuffData>();
             upgradeDictionary = new Dictionary<uint,UpgradeData>();

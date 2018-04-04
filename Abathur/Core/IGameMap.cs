@@ -1,13 +1,8 @@
 ﻿using Abathur.Model;
 using NydusNetwork.API.Protocol;
-using System.Collections.Generic;
 
 namespace Abathur.Core {
     public interface IGameMap {
-        //TODO: Expose Creep (somehow?)
-        //TODO: Expose Energy (somehow?)
-        //TODO: EXTRA - Add "distance" (and speed?)
-        //IEnumerable<Region> Regions { get; }
         /// <summary>
         /// Find a valid placement for a barrack/starport/factory with techlab/reactor.
         /// </summary>
@@ -32,6 +27,30 @@ namespace Abathur.Core {
         /// <param name="spacing">Optional spacing requirement</param>
         /// <returns></returns>
         bool ValidPlacement(UnitTypeData structure,Point2D point,int spacing = 0);
+
+        /// <summary>
+        /// Check for Creep at position.
+        /// </summary>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <returns></returns>
+        bool IsCreep(int x, int y);
+
+        /// <summary>
+        /// Check if position is powered by pylon.
+        /// </summary>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <returns></returns>
+        bool IsPowered(int x, int y);
+
+        /// <summary>
+        /// Check if position is blocked.
+        /// </summary>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <returns></returns>
+        bool IsBlocked(int x,int y);
 
         /// <summary>
         /// Reserve a space for structure on the blocked grid (will prevent production manager from building on it)

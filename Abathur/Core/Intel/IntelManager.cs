@@ -19,12 +19,15 @@ namespace Abathur.Core.Intel
     /// It should always be updated as the first module in each game-loop to ensure all modules base decision on the newest availible information.
     /// </summary>
     public class IntelManager : IIntelManager {
-        public IEnumerable<UnitTypeData> ProductionQueue{ get; set; }
-        public uint GameLoop => GameConstants.GameLoop;
+        public IEnumerable<UnitTypeData> ProductionQueue { get; set; }
+        public uint GameLoop                                    { get; private set; }
         public GameMap GameMap                                  { get; private set; }
         public Score CurrentScore                               { get; private set; }
         public PlayerCommon Common                              { get; private set; }
         public CaseHandler<Case,IUnit> Handler                  { get; private set; }
+
+        public Race EnemyRace                                   { get; set; }
+        public Race ParticipantRace                             { get; set; }
 
         private Dictionary<ulong, IntelUnit> StructuresSelf, WorkersSelf, UnitsSelf;
         private Dictionary<ulong,IntelUnit> StructureEnemy          { get; set; } = new Dictionary<ulong,IntelUnit>();
@@ -38,6 +41,10 @@ namespace Abathur.Core.Intel
         private Dictionary<ulong,IntelUnit> VespeneGeysers          { get; set; } = new Dictionary<ulong,IntelUnit>();
         private Dictionary<ulong,IntelUnit> Destructibles           { get; set; } = new Dictionary<ulong,IntelUnit>();
         private Dictionary<ulong,IntelUnit> XelNagaTowers           { get; set; } = new Dictionary<ulong,IntelUnit>();
+
+        public ObservationFeatureLayer FeatureLayer                 { get; private set; }
+        public ObservationRender Render                             { get; private set; }
+        public ObservationUI UI                                     { get; private set; }
 
 #if DEBUG
         private ISet<uint> IgnoredUnitTypes = new HashSet<uint>();
@@ -71,28 +78,33 @@ namespace Abathur.Core.Intel
         private void InitialIntel(Observation obs) {
             foreach(var unit in obs.RawData.Units)
                 if(GameConstants.IsMineralField(unit.UnitType)) {
-                    MineralFields.Add(unit.Tag,new IntelUnit(unit));
+                    MineralFields.Add(unit.Tag,new IntelUnit(unit, () => this.GameLoop));
                     GameMap.RegisterNatural(new Point { X = unit.Pos.X - 0.5f,Y = unit.Pos.Y },0.5f);
                     GameMap.RegisterStructure(new Point { X = unit.Pos.X - 0.5f,Y = unit.Pos.Y },0.5f);
                     GameMap.RegisterNatural(new Point { X = unit.Pos.X + 0.5f,Y = unit.Pos.Y },0.5f);
                     GameMap.RegisterStructure(new Point { X = unit.Pos.X + 0.5f,Y = unit.Pos.Y },0.5f);
                 } else if(GameConstants.IsVepeneGeyser(unit.UnitType)) {
-                    VespeneGeysers.Add(unit.Tag,new IntelUnit(unit));
+                    VespeneGeysers.Add(unit.Tag,new IntelUnit(unit, () => this.GameLoop));
                     GameMap.RegisterNatural(unit.Pos,1.5f);
                     GameMap.RegisterStructure(unit.Pos,1.5f);
                 } else if(GameConstants.IsDestructible(unit.UnitType)) {
-                    Destructibles.Add(unit.Tag,new IntelUnit(unit));
+                    Destructibles.Add(unit.Tag,new IntelUnit(unit,() => this.GameLoop));
                     GameMap.RegisterStructure(unit.Pos,0.5f); // TODO - add actual size to destructables
                 } else if(GameConstants.IsXelNagaTower(unit.UnitType)) {
-                    XelNagaTowers.Add(unit.Tag,new IntelUnit(unit));
+                    XelNagaTowers.Add(unit.Tag,new IntelUnit(unit,() => this.GameLoop));
                     GameMap.RegisterStructure(unit.Pos, 0.5f);
                 }
         }
 
         private void UpdateIntel(Observation obs) {
-            GameConstants.GameLoop = obs.GameLoop;
+            GameLoop = obs.GameLoop;
             GameMap.CreepAndVisibility(obs);
-
+            if(obs.FeatureLayerData != null)
+                FeatureLayer = obs.FeatureLayerData;
+            if(obs.RenderData != null)
+                Render = obs.RenderData;
+            if(obs.UiData != null)
+                UI = obs.UiData;
             if(obs.PlayerCommon != null)
                 Common = obs.PlayerCommon;
             if(obs.Score != null)
@@ -159,14 +171,14 @@ namespace Abathur.Core.Intel
                 if(WorkersSelf.ContainsKey(unit.Tag)) {
                     WorkersSelf[unit.Tag].DataSource = unit;
                 } else {
-                    var data = new IntelUnit(unit);
+                    var data = new IntelUnit(unit,() => this.GameLoop);
                     WorkersSelf.Add(unit.Tag,data);
                     Handler.Handle(Case.WorkerAddedSelf,data);
             } else if(IsBuilding(unit.UnitType)) {
                 if(StructuresSelf.ContainsKey(unit.Tag)) {
                     StructuresSelf[unit.Tag].DataSource = unit;
                 } else {
-                    var data = new IntelUnit(unit);
+                    var data = new IntelUnit(unit,() => this.GameLoop);
                     StructuresSelf.Add(unit.Tag,data);
                     Handler.Handle(Case.StructureAddedSelf,data);
                 }
@@ -174,7 +186,7 @@ namespace Abathur.Core.Intel
                 if(UnitsSelf.ContainsKey(unit.Tag)) {
                     UnitsSelf[unit.Tag].DataSource = unit;
                 } else {
-                    var data = new IntelUnit(unit);
+                    var data = new IntelUnit(unit,() => this.GameLoop);
                     UnitsSelf.Add(unit.Tag,data);
                     Handler.Handle(Case.UnitAddedSelf,data);
                 }
@@ -182,7 +194,7 @@ namespace Abathur.Core.Intel
         }
 
         private void AddUnitEnemy(Unit unit) {
-            var data = new IntelUnit(unit);
+            var data = new IntelUnit(unit,() => this.GameLoop);
             if(GameConstants.IsWorker(unit.UnitType))
                 if(WorkersEnemy.ContainsKey(unit.Tag)) {
                     WorkersEnemy[unit.Tag].DataSource = unit;
@@ -247,13 +259,13 @@ namespace Abathur.Core.Intel
         /// Set enemy race based on seen units, if not already set.
         /// </summary>
         private void DetectEnemyRace() {
-            if(GameConstants.EnemyRace == Race.Random || GameConstants.EnemyRace == Race.NoRace)
+            if(EnemyRace == Race.Random || EnemyRace == Race.NoRace)
                 if(UnitsEnemy.Count != 0)
-                    GameConstants.EnemyRace = unitTypeRepository.Get(UnitsEnemy.Values.First().UnitType).Race;
+                    EnemyRace = unitTypeRepository.Get(UnitsEnemy.Values.First().UnitType).Race;
                 else if(WorkersEnemy.Count != 0)
-                    GameConstants.EnemyRace = unitTypeRepository.Get(WorkersEnemy.Values.First().UnitType).Race;
+                    EnemyRace = unitTypeRepository.Get(WorkersEnemy.Values.First().UnitType).Race;
                 else if(StructureEnemy.Count != 0)
-                    GameConstants.EnemyRace = unitTypeRepository.Get(StructureEnemy.Values.First().UnitType).Race;
+                    EnemyRace = unitTypeRepository.Get(StructureEnemy.Values.First().UnitType).Race;
         }
 
         /// <summary>
@@ -310,8 +322,8 @@ namespace Abathur.Core.Intel
             if(rawManager.TryWaitObservationRequest(out var obs, GameLoop)) {
                 InitialIntel(obs.Observation.Observation);
                 UpdateIntel(obs.Observation.Observation);
-                if(GameConstants.ParticipantRace == Race.Random || GameConstants.ParticipantRace == Race.NoRace)
-                    GameConstants.ParticipantRace = unitTypeRepository.Get(StructuresSelf.Values.FirstOrDefault().UnitType).Race;
+                if(ParticipantRace == Race.Random || ParticipantRace == Race.NoRace)
+                    ParticipantRace = unitTypeRepository.Get(StructuresSelf.Values.FirstOrDefault().UnitType).Race;
             }
             GenerateColonies(info.GameInfo.StartRaw);
             Handler.RegisterHandler(Case.WorkerAddedSelf,u => AddWorkerSelfToColony(u));

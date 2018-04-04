@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Abathur.Constants;
 using Abathur.Core.Intel.Clustering;
 using Abathur.Extensions;
 using Abathur.Model;
-using Abathur.Modules.Services;
 using NydusNetwork.API.Protocol;
 
 namespace Abathur.Core.Intel.Map
@@ -253,12 +250,12 @@ namespace Abathur.Core.Intel.Map
                         legalPosition.Add(point);
                 }
             }
-            var result = legalPosition.OrderBy(p => colony.Minerals.Sum(m => Math.Pow(p.Distance(m.Point), 2))).First();
+            var result = legalPosition.OrderBy(p => colony.Minerals.Sum(m => Math.Pow(p.EuclidianDistance(m.Point), 2))).First();
             return result;
         }
 
         private const float MIN_NATURAL = 6;
         private static bool LegalPosition(IColony colony, Point2D point)
-            => !colony.Minerals.Any(m => point.Distance(m.Point.X - 0.5f,m.Point.Y) < MIN_NATURAL || point.Distance(m.Point.X + 0.5f,m.Point.Y) < MIN_NATURAL);
+            => !colony.Minerals.Any((Func<IUnit,bool>)(m => (bool)(MathExtensions.EuclidianDistance(point,(float)(m.Point.X - 0.5f),(float)m.Point.Y) < MIN_NATURAL || MathExtensions.EuclidianDistance(point,(float)(m.Point.X + 0.5f),(float)m.Point.Y) < MIN_NATURAL)));
     }
 }

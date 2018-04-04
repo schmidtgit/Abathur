@@ -1,6 +1,6 @@
 ﻿using Abathur.Model;
 
-namespace Abathur.Modules.Services {
+namespace Abathur.Modules.External.Services {
     public interface ICombatManagerService {
         void Execute(CombatRequest request);
     }

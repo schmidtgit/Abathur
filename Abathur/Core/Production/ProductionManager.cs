@@ -32,7 +32,7 @@ namespace Abathur.Core.Production
 
         private bool RefineryNeeded(IEnumerable<ProductionOrder> queue,UpgradeData tech) => tech.VespeneCost != 0 && RefineryNeeded(queue);
         private bool RefineryNeeded(IEnumerable<ProductionOrder> queue,UnitTypeData unit) => unit.VespeneCost != 0 && RefineryNeeded(queue);
-        private bool RefineryNeeded(IEnumerable<ProductionOrder> queue) => !techTree.HasUnit(GameConstants.RaceRefinery) && !IsUnitQueued(queue,GameConstants.RaceRefinery);
+        private bool RefineryNeeded(IEnumerable<ProductionOrder> queue) => !techTree.HasUnit(RefineryUnit()) && !IsUnitQueued(queue,RefineryUnit());
         private bool IsQueued(IEnumerable<ProductionOrder> queue,UnitTypeData unit) => IsUnitQueued(queue,unit.UnitId);
         private bool IsQueued(IEnumerable<ProductionOrder> queue,UpgradeData upgrade) => IsResearchQueued(queue,upgrade.UpgradeId);
         private bool IsUnitQueued(IEnumerable<ProductionOrder> queue,uint id) {
@@ -96,7 +96,7 @@ namespace Abathur.Core.Production
 #if DEBUG
                 log.LogWarning($"{prefix}{tech.Name} => Refinery/Assimilator/Extractor ({tech.VespeneCost} vespene cost, no production)");
 #endif
-                QueueRequirementsUnit(queue,unitTypeRepository.Get(GameConstants.RaceRefinery),canSkip,prefix + "\t");
+                QueueRequirementsUnit(queue,unitTypeRepository.Get(RefineryUnit()),canSkip,prefix + "\t");
             }
 
             var requiredResearch = techTree.GetRequiredResearch(tech);
@@ -130,7 +130,7 @@ namespace Abathur.Core.Production
 #if DEBUG
                 log.LogWarning($"{prefix}{unit.Name} => Refinery/Assimilator/Extractor ({unit.VespeneCost} vespene cost, no production)");
 #endif
-                QueueRequirementsUnit(queue,unitTypeRepository.Get(GameConstants.RaceRefinery),canSkip,prefix + "\t");
+                QueueRequirementsUnit(queue,unitTypeRepository.Get(RefineryUnit()),canSkip,prefix + "\t");
             }
 
             var requiredProducers = techTree.GetProducers(unit);
@@ -351,7 +351,7 @@ namespace Abathur.Core.Production
                 return false;
             switch(order.Type) {
                 case ProductionOrder.BuildType.Structure:
-                    if(order.Unit.UnitId == GameConstants.RaceRefinery)
+                    if(order.Unit.UnitId == RefineryUnit())
                         return ProduceVespene(order);
                     else
                         return ProduceBuilding(order);
@@ -368,7 +368,7 @@ namespace Abathur.Core.Production
             }
         }
 
-        private void GameStep() {
+        private void GameStep(){
             currentRessources = new Ressources(intelManager.Common);
             currentRessources -= reservedRessources;
             lock(_orders) {
@@ -452,8 +452,8 @@ namespace Abathur.Core.Production
 
         private void QueueOrderInFront(ProductionOrder order) {
 #if DEBUG
-            if(order.Unit != null && order.Unit.Race != GameConstants.ParticipantRace) {
-                log.LogError($"ProductionManager: {order.Unit.Name} is a {order.Unit.Race} unit, playing as {GameConstants.ParticipantRace}!");
+            if(order.Unit != null && order.Unit.Race != intelManager.ParticipantRace) {
+                log.LogError($"ProductionManager: {order.Unit.Name} is a {order.Unit.Race} unit, playing as {intelManager.ParticipantRace}!");
                 return;
             }
 #else
@@ -481,8 +481,8 @@ namespace Abathur.Core.Production
 
         private void QueueOrder(ProductionOrder order) {
 #if DEBUG
-            if(order.Unit != null && order.Unit.Race != GameConstants.ParticipantRace) {
-                log.LogError($"ProductionManager: {order.Unit.Name} is a {order.Unit.Race} unit, playing as {GameConstants.ParticipantRace}!");
+            if(order.Unit != null && order.Unit.Race != intelManager.ParticipantRace) {
+                log.LogError($"ProductionManager: {order.Unit.Name} is a {order.Unit.Race} unit, playing as {intelManager.ParticipantRace}!");
                 return;
             }
 #else
@@ -513,13 +513,27 @@ namespace Abathur.Core.Production
             }
         }
 
+        private uint RefineryUnit() {
+            switch(intelManager.ParticipantRace) {
+                case Race.Terran:
+                    return BlizzardConstants.Unit.Refinery;
+                case Race.Zerg:
+                    return BlizzardConstants.Unit.Extractor;
+                case Race.Protoss:
+                    return BlizzardConstants.Unit.Assimilator;
+                default:
+                case Race.NoRace:
+                case Race.Random:
+                    throw new System.Exception("Race not set!");
+            }
+        }
 
         private void Clear() {
             lock(_orders)
                 _orders.Clear();
             reservedRessources = new Ressources();
         }
-
+        
         void IModule.Initialize() {
             _orders = new List<ProductionOrder>();
             intelManager.ProductionQueue = _orders.Where(o => o.Type != ProductionOrder.BuildType.Research).Select(o => o.Unit);

@@ -35,9 +35,6 @@ namespace Abathur {
         }
 
         public void Initialize() {
-            GameConstants.ParticipantRace = Settings.ParticipantRace;
-            GameConstants.EnemyRace = Settings.Opponents.Count > 0 ? Settings.Opponents[0].Race : Race.NoRace;
-
             if(Modules == null) {
                 Modules = new List<IModule>();
                 log.LogWarning("Abathur: Running with 0 modules");

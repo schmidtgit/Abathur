@@ -1,11 +1,9 @@
-﻿using Abathur.Model;
-using Abathur.Modules.Services;
-using NydusNetwork;
+﻿using Abathur.Modules.External.Services;
+using Abathur.Model;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Abathur.Modules.External
-{
+namespace Abathur.Modules.External {
     public class ExternalModule : IModule {
         private const int TIMEOUT = 100000000; //ms
 
@@ -17,6 +15,7 @@ namespace Abathur.Modules.External
         private IIntelManagerService _intelService;
         private IProductionManagerService _productionService;
         private IRawManagerService _rawService;
+        private bool _onlyAsync;
         
         public ExternalModule(ICombatManagerService combatService, IIntelManagerService intelService, IProductionManagerService productionService, IRawManagerService rawService) {
             _combatService = combatService;
@@ -58,7 +57,10 @@ namespace Abathur.Modules.External
             _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.Initialize } });
         }
 
-        private bool WaitForGameStep(NotificationType type = NotificationType.GameStep) {
+        private bool WaitForGameStep(NotificationType type = NotificationType.GameStep)
+        {
+            if (_onlyAsync) return true;
+
             _marker = new Task(() => { });
             _connection.SendMessage(new AbathurResponse {
                 Notification = new Notification {
@@ -69,21 +71,40 @@ namespace Abathur.Modules.External
             return _marker.Wait(TIMEOUT);
         }
 
-        void IModule.OnStart()    => WaitForGameStep(NotificationType.GameStart);
+        void IModule.OnStart()
+        {
+            _intelService.RegisterForEvents();
+            WaitForGameStep(NotificationType.GameStart);
+        }
+
         void IModule.OnStep()     => WaitForGameStep();
         void IModule.OnGameEnded()    => _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.GameEnded } });
         void IModule.OnRestart()      => _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.Restart } });
         private void RequestHandler(byte[] data) {
             var request = AbathurRequest.Parser.ParseFrom(data);
-            if(request.Intel != null)
+            if (request.OnlyAsync)
+            {
+                _onlyAsync = true;
+                if (!_marker.IsCompleted) _marker.RunSynchronously();
+            }
+            if (_onlyAsync && request.Intel != null)
+            {
                 _intelSettings = request.Intel;
+                _connection.SendMessage(new AbathurResponse {
+                    Notification = new Notification {
+                        Type = NotificationType.GameStep
+                    },
+                    Intel = _intelService.BundleIntel(_intelSettings)
+                });
+            }
+                
             foreach (var combatRequest in request.Combat)
                 _combatService.Execute(combatRequest);
             foreach (var productionRequest in request.Production)
                 _productionService.Execute(productionRequest);
             if (request.Raw != null)
                 _rawService.Execute(request.Raw);
-            if (_marker != null)
+            if (_marker != null && !_onlyAsync)
                 _marker.RunSynchronously();
         }
     }

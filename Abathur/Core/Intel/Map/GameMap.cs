@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 using Abathur.Core.Intel.Clustering;
-using Abathur.Modules.Services;
 using Color = System.Drawing.Color;
 using Abathur.Repositories;
 using Abathur.Model;
@@ -98,7 +96,7 @@ namespace Abathur.Core.Intel.Map
             var my = (int)startY + size;
             for(int x = (int)startX; x < mx; x++)
                 for(int y = (int)startY; y < my; y++)
-                    if(MathServices.EuclidianDistance(p,x,y) <= r)
+                    if(MathExtensions.EuclidianDistance(p,x,y) <= r)
                         Power.Set(x,y,1);
         }
 
@@ -282,7 +280,12 @@ namespace Abathur.Core.Intel.Map
 
         void IGameMap.Reserve(UnitTypeData structure,Point2D position) => UpdateBlockedGrid(structure,position,1);
 
-        // Improve and expose
+        bool IGameMap.IsCreep(int x,int y) => Creep.IsSet(x,y);
+        bool IGameMap.IsPowered(int x,int y) => Power.IsSet(x,y);
+        bool IGameMap.IsBlocked(int x,int y) => BlockedGrid.IsSet(x,y);
+
+        //TODO: Improve and expose
+        /*
         private int GetShortestGroundDistance(Point2D start,Point2D end) {
             var startTile = Graph.FirstOrDefault(t => Math.Abs(t.X - start.X) <= 1.0 && Math.Abs(t.Y - start.Y) <= 1.0);
             var endTile = Graph.FirstOrDefault(t => Math.Abs(t.X - end.X) <= 1.0 && Math.Abs(t.Y - end.Y) <= 1.0);
@@ -332,5 +335,6 @@ namespace Abathur.Core.Intel.Map
             }
             return Int32.MaxValue;
         }
+        */
     }
 }
