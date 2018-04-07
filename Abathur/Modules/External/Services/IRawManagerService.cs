@@ -1,7 +1,8 @@
 ﻿using Abathur.Model;
+using NydusNetwork.API.Protocol;
 
 namespace Abathur.Modules.External.Services {
     public interface IRawManagerService {
-        void Execute(RawRequest request);
+        Response Execute(RawRequest request);
     }
 }

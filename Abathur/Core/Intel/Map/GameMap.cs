@@ -62,7 +62,8 @@ namespace Abathur.Core.Intel.Map
             intelManager.Handler.RegisterHandler(Case.StructureDestroyed,u => EventUnitDestroyed(u));
         }
 
-        public void RegisterNatural(NydusNetwork.API.Protocol.Point point,float radius) => UpdateImageGrid(radius+3.5f,point.X,point.Y,1,NaturalGrid);
+        public void RegisterNatural(NydusNetwork.API.Protocol.Point point,float radius)
+            => UpdateRadius(point.ConvertTo2D(),radius + 3.1f,NaturalGrid);
         public void RegisterStructure(NydusNetwork.API.Protocol.Point point,float radius) => UpdateImageGrid(radius,point.X,point.Y,1,BlockedGrid);
         private void EventUnitDestroyed(IUnit unit) => UpdateBlockedGrid(unitTypeRepository.Get(unit.UnitType),unit.Point,0);
         public void EventUnitAdded(IUnit unit) => UpdateBlockedGrid(unitTypeRepository.Get(unit.UnitType),unit.Point,1);
@@ -85,19 +86,19 @@ namespace Abathur.Core.Intel.Map
                 UpdatePower(ps);
         }
 
-        //TODO: Make smarter.
-        private void UpdatePower(PowerSource source) {
-            var p = source.Pos.ConvertTo2D();
-            var r = source.Radius;
-            var startX = MathF.Round(p.X - r);
-            var startY = MathF.Round(p.Y - r);
-            var size = (int)(r * 2);
+        private void UpdatePower(PowerSource source) =>
+            UpdateRadius(source.Pos.ConvertTo2D(),source.Radius,Power);
+
+        private void UpdateRadius(Point2D p, float radius, ImageDataHandler map) {
+            var startX = MathF.Round(p.X - radius);
+            var startY = MathF.Round(p.Y - radius);
+            var size = (int)(radius * 2);
             var mx = (int)startX + size;
             var my = (int)startY + size;
             for(int x = (int)startX; x < mx; x++)
                 for(int y = (int)startY; y < my; y++)
-                    if(MathExtensions.EuclidianDistance(p,x,y) <= r)
-                        Power.Set(x,y,1);
+                    if(MathExtensions.EuclidianDistance(p,x,y) <= radius)
+                        map.Set(x,y,1);
         }
 
         private bool ValidPlacement(int xPosition,int yPosition,int size,bool requiresCreep = false,bool requiresPower = false,bool avoidCreep = true,bool avoidNatural = false) {
@@ -266,7 +267,7 @@ namespace Abathur.Core.Intel.Map
 
         IPosition IGameMap.FindPlacementWithAddOn(Point2D point) => FindPlacementWithAddOn(point.X,point.Y);
         IPosition IGameMap.FindPlacement(UnitTypeData structure,Point2D point,int spacing) => FindPlacement(point.X,point.Y,structure,spacing);
-        bool IGameMap.ValidPlacement(UnitTypeData structure,Point2D point,int spacing) { //TODO: Improve to avoid code duplication
+        bool IGameMap.ValidPlacement(UnitTypeData structure,Point2D point,int spacing) {
             var r = FootprintRadius(structure) + spacing;
             var d = (int)(r * 2);
             var x = point.X;

@@ -576,6 +576,11 @@ namespace Abathur.Core.Production
         void IProductionManager.QueueTechImportant(uint upgradeId)
             => QueueTechImportant(upgradeRepository.Get(upgradeId));
 
+        void IProductionManager.QueueUnits(int spacing,bool lowPriority,params uint[] units) {
+            foreach(var id in units)
+                QueueUnit(unitTypeRepository.Get(id),null,spacing,lowPriority);
+        }
+
         enum ProductionStatus { InsufficientMinerals, InsufficientVespene, InsufficientSupply, NeedTech, Ready }
     }
 }

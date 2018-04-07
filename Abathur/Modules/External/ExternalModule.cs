@@ -1,7 +1,7 @@
-﻿using Abathur.Modules.External.Services;
-using Abathur.Model;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using Abathur.Model;
+using Abathur.Modules.External.Services;
 
 namespace Abathur.Modules.External {
     public class ExternalModule : IModule {
@@ -16,12 +16,15 @@ namespace Abathur.Modules.External {
         private IProductionManagerService _productionService;
         private IRawManagerService _rawService;
         private bool _onlyAsync;
-        
-        public ExternalModule(ICombatManagerService combatService, IIntelManagerService intelService, IProductionManagerService productionService, IRawManagerService rawService) {
+        private bool _restart;
+        private IAbathur _abathur;
+
+        public ExternalModule(ICombatManagerService combatService,IIntelManagerService intelService,IProductionManagerService productionService,IRawManagerService rawService, IAbathur abathur) {
             _combatService = combatService;
             _intelService = intelService;
             _productionService = productionService;
             _rawService = rawService;
+            _abathur = abathur;
         }
 
         void IModule.Initialize() {
@@ -44,7 +47,7 @@ namespace Abathur.Modules.External {
                 ProductionQueue = true,
                 Squads = true,
             };
-            _connection = new NydusWormConnection(b => RequestHandler(b));
+            _connection = new NydusWormConnection(RequestHandler);
             _connection.Initialize();
 
             Process.Start(new ProcessStartInfo {
@@ -57,9 +60,9 @@ namespace Abathur.Modules.External {
             _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.Initialize } });
         }
 
-        private bool WaitForGameStep(NotificationType type = NotificationType.GameStep)
-        {
-            if (_onlyAsync) return true;
+        private bool WaitForGameStep(NotificationType type = NotificationType.GameStep) {
+            if(_onlyAsync)
+                return true;
 
             _marker = new Task(() => { });
             _connection.SendMessage(new AbathurResponse {
@@ -73,22 +76,53 @@ namespace Abathur.Modules.External {
 
         void IModule.OnStart()
         {
+            _restart = false;
             _intelService.RegisterForEvents();
-            WaitForGameStep(NotificationType.GameStart);
+            _marker = new Task(() => { });
+            _connection.SendMessage(new AbathurResponse {
+                Notification = new Notification {
+                    Type = NotificationType.GameStart
+                },
+                Intel = _intelService.BundleIntel(_intelSettings)
+            });
+            _marker.Wait(TIMEOUT);
         }
 
-        void IModule.OnStep()     => WaitForGameStep();
-        void IModule.OnGameEnded()    => _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.GameEnded } });
-        void IModule.OnRestart()      => _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.Restart } });
+        void IModule.OnStep()
+        {
+            WaitForGameStep();
+            if(_restart) {
+                _abathur.Restart();
+            }
+        } 
+
+        void IModule.OnGameEnded()
+        {
+            _marker = new Task(() => { });
+            _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.GameEnded } });
+            _marker.Wait(TIMEOUT);
+            if(_restart) {
+                _abathur.Restart();
+            }
+        }
+
+        void IModule.OnRestart()
+        {
+            _marker = new Task(() => { });
+            _connection.SendMessage(new AbathurResponse { Notification = new Notification { Type = NotificationType.Restart } });
+            _marker.Wait(TIMEOUT);
+            _restart = false;
+        } 
         private void RequestHandler(byte[] data) {
             var request = AbathurRequest.Parser.ParseFrom(data);
-            if (request.OnlyAsync)
-            {
+            /*
+            if(request.OnlyAsync && request.Restart == null) {
                 _onlyAsync = true;
-                if (!_marker.IsCompleted) _marker.RunSynchronously();
+                if(!_marker.IsCompleted)
+                    _marker.RunSynchronously();
             }
-            if (_onlyAsync && request.Intel != null)
-            {
+            */
+            if(_onlyAsync && request.Intel != null) {
                 _intelSettings = request.Intel;
                 _connection.SendMessage(new AbathurResponse {
                     Notification = new Notification {
@@ -97,15 +131,27 @@ namespace Abathur.Modules.External {
                     Intel = _intelService.BundleIntel(_intelSettings)
                 });
             }
-                
-            foreach (var combatRequest in request.Combat)
+
+            foreach(var combatRequest in request.Combat)
                 _combatService.Execute(combatRequest);
-            foreach (var productionRequest in request.Production)
+            foreach(var productionRequest in request.Production)
                 _productionService.Execute(productionRequest);
-            if (request.Raw != null)
-                _rawService.Execute(request.Raw);
-            if (_marker != null && !_onlyAsync)
+
+            if(request.Raw != null) {
+                var resp = _rawService.Execute(request.Raw);
+                if(resp != null) {
+                    _connection.SendMessage(new AbathurResponse { RawResponse = resp });
+                }
+            } else if(_marker != null && !_onlyAsync)
                 _marker.RunSynchronously();
+            /*
+            if (request.Restart != null)
+            {
+                _restart = true;
+                if(_marker != null && !_marker.IsCompleted)
+                    _marker.RunSynchronously();
+            }
+            */
         }
     }
 }

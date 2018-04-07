@@ -1,5 +1,6 @@
 ﻿using Abathur.Core;
 using Abathur.Model;
+using NydusNetwork.API.Protocol;
 
 namespace Abathur.Modules.External.Services {
     public class ProductionManagerService : IProductionManagerService {

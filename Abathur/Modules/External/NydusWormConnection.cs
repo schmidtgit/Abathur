@@ -38,15 +38,18 @@ namespace Abathur.Modules.External {
             var size = new byte[4];
             _stream.Read(size, 0, 4);
             var buffsize = BitConverter.ToInt32(size, 0);
-            byte[] messageBytes = ReadBytes(buffsize);
+            byte[] messageBytes = new byte[0];
+            if (buffsize != 0)
+            {
+                messageBytes = ReadBytes(buffsize);
+            }
             return messageBytes;
         }
 
         private void Receive(TcpClient client) {
             while(client.Connected) {
                 var msg = ReadMessage();
-                if(msg.Length != 0)
-                    _handler.Invoke(msg);
+                _handler.Invoke(msg);
             }
             Close(client);
         }

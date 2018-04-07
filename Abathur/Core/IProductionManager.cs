@@ -42,7 +42,7 @@ namespace Abathur.Core {
         /// <summary>
         /// Place production order and all requirements after all other items in the queue.
         /// </summary>
-        /// <param name="unit">UnitTye to queue</param>
+        /// <param name="unit">UnitType to queue</param>
         /// <param name="desiredPosition">Point to place structure near or place to send unit after production</param>
         /// <param name="spacing">Required spacing around structure, only used for structures</param>
         /// <param name="lowPriority">Will reserve ressources if not currently affordable if true</param>
@@ -51,11 +51,17 @@ namespace Abathur.Core {
         /// <summary>
         /// Place production order and all requirements after all other items in the queue.
         /// </summary>
-        /// <param name="unitId">UnitTye to queue by id</param>
+        /// <param name="unitId">UnitType to queue by id</param>
         /// <param name="desiredPosition">Point to place structure near or place to send unit after production</param>
         /// <param name="spacing">Required spacing around structure, only used for structures</param>
         /// <param name="lowPriority">Will reserve ressources if not currently affordable if true</param>
         void QueueUnit(uint unitId, Point2D desiredPosition = null, int spacing = 1,bool lowPriority = false);
+
+        /// <summary>
+        /// Used to queue multiple units at once.
+        /// </summary>
+        /// <param name="units">UnitType(s) to queue</param>
+        void QueueUnits(int spacing = 0, bool lowPriority = false, params uint[] units);
 
         /// <summary>
         /// Queue upgrade and requirements after everything else in the queue.
