@@ -195,20 +195,29 @@ namespace Abathur.Core.Production
             var refineries = colony.Structures.Where(b => GameConstants.IsVespeneGeyserBuilding(b.UnitType));
             var target = colony.Vespene.FirstOrDefault(v => !refineries.Any(r => r.Pos.X == v.Pos.X && r.Pos.Y == v.Pos.Y));
             var worker = GetWorker(target);
-#if DEBUG
+
             if(target == null) {
-                log.LogError($"ProductionManager: No available vespene geyser for {order.Unit.Name} at colony {colony.Id}");
-                return false;
+                log.LogWarning($"ProductionManager: No available vespene geyser for {order.Unit.Name} at colony {colony.Id}");
+                var colonies = intelManager.Colonies.Where(c => c.Structures.Any(u => u.Alliance == Alliance.Self));
+                foreach(var col in colonies) {
+                    target = col.Vespene.FirstOrDefault(v => !refineries.Any(r => r.Pos.X == v.Pos.X && r.Pos.Y == v.Pos.Y));
+                    if(target != null) {
+                        log.LogSuccess($"ProductionManager: Found vespene geyser for {order.Unit.Name} at colony {colony.Id}");
+                        break;
+                    }
+                }
             }
+
+            if(target == null)
+                return false;
+
             if(worker == null) {
                 log.LogWarning($"ProductionManager: No worker found for {order.Unit.Name}");
                 return false;
             }
             if(!ReserveRessource(order.Unit))
                 return false;
-#else
-            if(target == null || worker == null || !ReserveRessource(order.Unit)) return false;
-#endif
+
             order.Status = ProductionOrder.OrderStatus.Commissioned;
             order.AssignedUnit = worker;
             rawManager.QueueActions(RawCommand(order.Unit.AbilityId,worker.Tag,target.Tag));

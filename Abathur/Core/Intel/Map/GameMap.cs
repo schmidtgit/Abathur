@@ -63,7 +63,7 @@ namespace Abathur.Core.Intel.Map
         }
 
         public void RegisterNatural(NydusNetwork.API.Protocol.Point point,float radius)
-            => UpdateRadius(point.ConvertTo2D(),radius + 3.1f,NaturalGrid);
+            => UpdateRadius(point.ConvertTo2D(),radius + 3.5f,NaturalGrid);
         public void RegisterStructure(NydusNetwork.API.Protocol.Point point,float radius) => UpdateImageGrid(radius,point.X,point.Y,1,BlockedGrid);
         private void EventUnitDestroyed(IUnit unit) => UpdateBlockedGrid(unitTypeRepository.Get(unit.UnitType),unit.Point,0);
         public void EventUnitAdded(IUnit unit) => UpdateBlockedGrid(unitTypeRepository.Get(unit.UnitType),unit.Point,1);
