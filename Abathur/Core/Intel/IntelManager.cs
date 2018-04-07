@@ -79,13 +79,16 @@ namespace Abathur.Core.Intel
             foreach(var unit in obs.RawData.Units)
                 if(GameConstants.IsMineralField(unit.UnitType)) {
                     MineralFields.Add(unit.Tag,new IntelUnit(unit, () => this.GameLoop));
-                    GameMap.RegisterNatural(new Point { X = unit.Pos.X - 0.5f,Y = unit.Pos.Y },0.5f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X - 0.5f,Y = unit.Pos.Y },4f);
                     GameMap.RegisterStructure(new Point { X = unit.Pos.X - 0.5f,Y = unit.Pos.Y },0.5f);
-                    GameMap.RegisterNatural(new Point { X = unit.Pos.X + 0.5f,Y = unit.Pos.Y },0.5f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X + 0.5f,Y = unit.Pos.Y },4f);
                     GameMap.RegisterStructure(new Point { X = unit.Pos.X + 0.5f,Y = unit.Pos.Y },0.5f);
                 } else if(GameConstants.IsVepeneGeyser(unit.UnitType)) {
                     VespeneGeysers.Add(unit.Tag,new IntelUnit(unit, () => this.GameLoop));
-                    GameMap.RegisterNatural(unit.Pos,1.5f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X - 0.5f, Y = unit.Pos.Y + 0.5f},4f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X - 0.5f, Y = unit.Pos.Y - 0.5f},4f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X + 0.5f, Y = unit.Pos.Y + 0.5f},4f);
+                    GameMap.RegisterNatural(new Point { X = unit.Pos.X + 0.5f, Y = unit.Pos.Y - 0.5f},4f);
                     GameMap.RegisterStructure(unit.Pos,1.5f);
                 } else if(GameConstants.IsDestructible(unit.UnitType)) {
                     Destructibles.Add(unit.Tag,new IntelUnit(unit,() => this.GameLoop));
